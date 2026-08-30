@@ -17,34 +17,34 @@
         Loaded="Window_Loaded">
 
     <Window.Resources>
-        <!-- Animation de pulsation pour le point vert -->
+        <!-- Animation subtile de respiration pour le point d'état vert -->
         <Storyboard x:Key="PulseStoryboard" RepeatBehavior="Forever">
             <DoubleAnimation Storyboard.TargetName="PulseDot"
                              Storyboard.TargetProperty="Opacity"
-                             From="1.0" To="0.3" Duration="0:0:1"
+                             From="1.0" To="0.4" Duration="0:0:1.2"
                              AutoReverse="True" />
             <DoubleAnimation Storyboard.TargetName="PulseDotScale"
                              Storyboard.TargetProperty="ScaleX"
-                             From="1.0" To="1.3" Duration="0:0:1"
+                             From="1.0" To="1.25" Duration="0:0:1.2"
                              AutoReverse="True" />
             <DoubleAnimation Storyboard.TargetName="PulseDotScale"
                              Storyboard.TargetProperty="ScaleY"
-                             From="1.0" To="1.3" Duration="0:0:1"
+                             From="1.0" To="1.25" Duration="0:0:1.2"
                              AutoReverse="True" />
         </Storyboard>
     </Window.Resources>
 
     <Grid Margin="12">
-        <!-- Conteneur principal avec ombre portée et bordure arrondie -->
-        <Border x:Name="MainContainerBorder" CornerRadius="22" Background="#101218" BorderBrush="#252936" BorderThickness="1.2">
+        <!-- Fenêtre principale (Shape Consistency : 16px) -->
+        <Border x:Name="MainContainerBorder" CornerRadius="16" Background="#0c0e16" BorderBrush="#1f2436" BorderThickness="1.2">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="32" ShadowDepth="0" Color="#5865F2" Opacity="0.35"/>
+                <DropShadowEffect BlurRadius="28" ShadowDepth="0" Color="#5865F2" Opacity="0.3"/>
             </Border.Effect>
 
             <Grid Margin="24,20,24,20">
 
                 <!-- ═══════════════════════════════════════════════════════ -->
-                <!-- ÉCRAN 1 : PRÉCHARGEUR ANIMÉ                          -->
+                <!-- ÉCRAN 1 : PRÉCHARGEUR FLUIDE                            -->
                 <!-- ═══════════════════════════════════════════════════════ -->
                 <Grid x:Name="PreloaderGrid" Visibility="Visible">
                     <Grid.RowDefinitions>
@@ -62,33 +62,33 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Image Source="app.ico" Width="20" Height="20" Margin="0,0,10,0"/>
-                            <TextBlock Text="VENCORDEX" FontWeight="ExtraBold" FontSize="13" Foreground="#8da0f9"/>
-                            <TextBlock Text=" • AUTO-PATCHER" FontWeight="Bold" FontSize="13" Foreground="#4e5366" Margin="4,0,0,0"/>
+                            <Image Source="app.ico" Width="18" Height="18" Margin="0,0,8,0"/>
+                            <TextBlock Text="VENCORDEX" FontWeight="Black" FontSize="13" Foreground="#8da0f9"/>
+                            <TextBlock Text=" • AUTO-PATCHER" FontWeight="Bold" FontSize="13" Foreground="#4c536b" Margin="4,0,0,0"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                            <!-- Indicateur statut pill -->
-                            <Border Background="#181c26" CornerRadius="12" Padding="10,4,12,4" BorderBrush="#282f42" BorderThickness="1" Margin="0,0,8,0">
+                            <!-- Indicateur statut pill (20px) -->
+                            <Border Background="#121622" CornerRadius="12" Padding="9,3,11,3" BorderBrush="#22283a" BorderThickness="1" Margin="0,0,8,0">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Grid Width="8" Height="8" Margin="0,0,8,0">
-                                        <Ellipse x:Name="PulseDot" Fill="#57F287" RenderTransformOrigin="0.5,0.5">
+                                    <Grid Width="7" Height="7" Margin="0,0,7,0">
+                                        <Ellipse x:Name="PulseDot" Fill="#10B981" RenderTransformOrigin="0.5,0.5">
                                             <Ellipse.RenderTransform>
                                                 <ScaleTransform x:Name="PulseDotScale" ScaleX="1" ScaleY="1"/>
                                             </Ellipse.RenderTransform>
                                         </Ellipse>
                                     </Grid>
-                                    <TextBlock x:Name="BadgeText" Text="INJECTION" FontSize="11" FontWeight="Bold" Foreground="#57F287"/>
+                                    <TextBlock x:Name="BadgeText" Text="INJECTION" FontSize="10.5" FontWeight="Bold" Foreground="#10B981"/>
                                 </StackPanel>
                             </Border>
 
-                            <!-- Bouton accès au Centre de Contrôle -->
+                            <!-- Bouton accès au Centre de Contrôle (8px) -->
                             <Button Click="BtnOpenManager_Click" ToolTip="Ouvrir le Centre de Contrôle"
-                                    Width="28" Height="28" Background="#181c26" BorderBrush="#282f42" BorderThickness="1" Cursor="Hand">
+                                    Width="26" Height="26" Background="#141824" BorderBrush="#22283a" BorderThickness="1" Cursor="Hand">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8">
-                                            <TextBlock Text="⚙" FontSize="13" Foreground="#8da0f9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7">
+                                            <TextBlock Text="⚙" FontSize="12" Foreground="#8da0f9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
                                 </Button.Template>
@@ -96,61 +96,63 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- Section Centrale : Compteur -->
-                    <Grid Grid.Row="1" VerticalAlignment="Center" Margin="0,15,0,10">
+                    <!-- Section Centrale : Compteur Haute Précision -->
+                    <Grid Grid.Row="1" VerticalAlignment="Center" Margin="0,12,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock x:Name="StatusTitle" Text="SYNCHRONISATION" FontSize="11" FontWeight="Bold" Foreground="#656d8a" Margin="0,0,0,4"/>
-                            <TextBlock x:Name="StatusSub" Text="Vérification des fichiers de Discord..." FontSize="14" FontWeight="SemiBold" Foreground="#f2f3f5" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock x:Name="StatusTitle" Text="SYNCHRONISATION" FontSize="10.5" FontWeight="Bold" Foreground="#5e6682" Margin="0,0,0,3"/>
+                            <TextBlock x:Name="StatusSub" Text="Vérification des fichiers de Discord..." FontSize="13.5" FontWeight="SemiBold" Foreground="#f3f4f6" TextTrimming="CharacterEllipsis"/>
                         </StackPanel>
 
+                        <!-- Compteur avec tabular figures -->
                         <TextBlock x:Name="PercentText" Grid.Column="1" Text="00%" 
-                                   FontSize="52" FontWeight="Black" 
-                                   FontFamily="Segoe UI Variable Display, Inter, Segoe UI" 
+                                   FontSize="50" FontWeight="Black" 
+                                   FontFamily="Segoe UI Variable Display, Outfit, Inter, Segoe UI" 
                                    Foreground="#FFFFFF" 
                                    VerticalAlignment="Center" HorizontalAlignment="Right">
                             <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="#5865F2" Opacity="0.4"/>
+                                <DropShadowEffect BlurRadius="18" ShadowDepth="0" Color="#5865F2" Opacity="0.35"/>
                             </TextBlock.Effect>
                         </TextBlock>
                     </Grid>
 
-                    <!-- Barre de progression -->
-                    <Grid Grid.Row="2" Margin="0,5,0,12">
-                        <Border Height="12" Background="#161822" CornerRadius="6" BorderBrush="#202433" BorderThickness="1">
+                    <!-- Barre de progression fluide -->
+                    <Grid Grid.Row="2" Margin="0,4,0,10">
+                        <Border Height="10" Background="#131622" CornerRadius="5" BorderBrush="#1c2132" BorderThickness="1">
                             <Grid ClipToBounds="True">
-                                <Border x:Name="ProgressBarFill" HorizontalAlignment="Left" Width="0" CornerRadius="5">
+                                <Border x:Name="ProgressBarFill" HorizontalAlignment="Left" Width="0" CornerRadius="4">
                                     <Border.Background>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                             <GradientStop Color="#5865F2" Offset="0.0"/>
-                                            <GradientStop Color="#854FEE" Offset="0.4"/>
-                                            <GradientStop Color="#EB459E" Offset="0.8"/>
-                                            <GradientStop Color="#57F287" Offset="1.0"/>
+                                            <GradientStop Color="#707DF7" Offset="0.5"/>
+                                            <GradientStop Color="#10B981" Offset="1.0"/>
                                         </LinearGradientBrush>
                                     </Border.Background>
                                     <Border.Effect>
-                                        <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#5865F2" Opacity="0.8"/>
+                                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#5865F2" Opacity="0.6"/>
                                     </Border.Effect>
                                 </Border>
                             </Grid>
                         </Border>
                     </Grid>
 
-                    <!-- Pied de carte -->
+                    <!-- Pied de carte avec signature -->
                     <Grid Grid.Row="3">
                         <TextBlock x:Name="FooterText" Text="PRÉPARATION DE DISCORD EN COURS..." 
-                                   FontSize="10.5" FontWeight="Bold" Foreground="#4e5366"/>
-                        <TextBlock Text="t12lve le vibecodeur de l'extreme" HorizontalAlignment="Right"
-                                   FontSize="9" FontWeight="SemiBold" Foreground="#4e5366"/>
+                                   FontSize="10" FontWeight="Bold" Foreground="#4e5670" 
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="t12lve le vibecodeur de l'extreme" 
+                                   FontSize="10" FontWeight="SemiBold" Foreground="#8da0f9" 
+                                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                 </Grid>
 
                 <!-- ═══════════════════════════════════════════════════════ -->
-                <!-- ÉCRAN 2 : DIALOGUE DE CONFIRMATION (DISCORD OUVERT)   -->
+                <!-- ÉCRAN 2 : MODALE INTELLIGENTE (DISCORD DÉJÀ OUVERT)    -->
                 <!-- ═══════════════════════════════════════════════════════ -->
                 <Grid x:Name="ConfirmGrid" Visibility="Collapsed">
                     <Grid.RowDefinitions>
@@ -161,35 +163,32 @@
 
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Image Source="app.ico" Width="20" Height="20" Margin="0,0,10,0"/>
-                            <TextBlock Text="MISE À JOUR DÉTECTÉE" FontWeight="ExtraBold" FontSize="12.5" Foreground="#FEE75C"/>
-                            <TextBlock Text=" • DISCORD EN COURS" FontWeight="Bold" FontSize="12.5" Foreground="#5d637a" Margin="4,0,0,0"/>
+                            <Image Source="app.ico" Width="18" Height="18" Margin="0,0,8,0"/>
+                            <TextBlock Text="VENCORDEX" FontWeight="Black" FontSize="13" Foreground="#8da0f9"/>
+                            <TextBlock Text=" • SESSION EN COURS" FontWeight="Bold" FontSize="13" Foreground="#4c536b" Margin="4,0,0,0"/>
                         </StackPanel>
                     </Grid>
 
-                    <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,10,0,12">
-                        <TextBlock Text="Discord est actuellement ouvert" FontSize="20" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,0,0,6"/>
-                        <TextBlock Text="Une mise à jour sans Vencord a été détectée. Pour appliquer le patch immédiatement, Discord doit être redémarré."
-                                   FontSize="12.5" Foreground="#949ba4" TextWrapping="Wrap" LineHeight="18"/>
-                        <TextBlock Text="Voulez-vous fermer Discord maintenant ou préparer le patch pour le prochain lancement ?"
-                                   FontSize="12" Foreground="#8da0f9" TextWrapping="Wrap" Margin="0,6,0,0" FontWeight="SemiBold"/>
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,8,0,10">
+                        <TextBlock Text="Discord est actuellement ouvert" 
+                                   FontSize="17" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,0,0,5"/>
+                        <TextBlock Text="Une mise à jour Discord a été détectée. Voulez-vous relancer Discord maintenant pour appliquer Vencord, ou différer le patch au prochain démarrage sans couper votre appel ?" 
+                                   FontSize="12.5" Foreground="#9ca3af" TextWrapping="Wrap" LineHeight="18"/>
                     </StackPanel>
 
-                    <Grid Grid.Row="2" Margin="0,5,0,0">
+                    <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button x:Name="BtnKillAndRestart" Grid.Column="0" Click="BtnKillAndRestart_Click"
-                                Height="44" Cursor="Hand" Background="#5865F2">
+                        <Button x:Name="BtnKillAndPatch" Grid.Column="0" Click="BtnKillAndRestart_Click"
+                                Height="42" Cursor="Hand" Background="#5865F2">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="⚡ Oui, redémarrer" FontWeight="Bold" FontSize="13" Foreground="#FFFFFF"/>
-                                        </StackPanel>
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <TextBlock Text="⚡ Oui, redémarrer" FontWeight="Bold" FontSize="12.5" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
@@ -201,18 +200,16 @@
                         </Button>
 
                         <Button x:Name="BtnPatchNextLaunch" Grid.Column="2" Click="BtnPatchNextLaunch_Click"
-                                Height="44" Cursor="Hand" Background="#1a1c26">
+                                Height="42" Cursor="Hand" Background="#161926">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="#2f3448" BorderThickness="1.2" CornerRadius="10">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="⏱ Au prochain lancement" FontWeight="SemiBold" FontSize="12.5" Foreground="#B5BAC1"/>
-                                        </StackPanel>
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="#252b3d" BorderThickness="1.2" CornerRadius="8">
+                                        <TextBlock Text="⏱ Au prochain lancement" FontWeight="SemiBold" FontSize="12" Foreground="#d1d5db" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#232635"/>
-                                            <Setter TargetName="border" Property="BorderBrush" Value="#444b68"/>
+                                            <Setter TargetName="border" Property="Background" Value="#1d2233"/>
+                                            <Setter TargetName="border" Property="BorderBrush" Value="#3a4360"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -232,33 +229,32 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- 1. En-tête avec boutons de fenêtre -->
-                    <Grid Grid.Row="0" Margin="0,0,0,14">
+                    <!-- 1. En-tête -->
+                    <Grid Grid.Row="0" Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Image Source="app.ico" Width="22" Height="22" Margin="0,0,10,0"/>
-                            <TextBlock Text="VENCORDEX" FontWeight="Black" FontSize="14" Foreground="#8da0f9"/>
-                            <TextBlock Text=" • CENTRE DE CONTRÔLE" FontWeight="Bold" FontSize="14" Foreground="#4e5366" Margin="4,0,0,0"/>
+                            <Image Source="app.ico" Width="18" Height="18" Margin="0,0,8,0"/>
+                            <TextBlock Text="VENCORDEX" FontWeight="Black" FontSize="13" Foreground="#8da0f9"/>
+                            <TextBlock Text=" • CENTRE DE CONTRÔLE" FontWeight="Bold" FontSize="13" Foreground="#4c536b" Margin="4,0,0,0"/>
                         </StackPanel>
 
-                        <!-- Bouton fermer -->
-                        <Button Click="BtnCloseManager_Click" Grid.Column="1" Width="26" Height="26" Background="#1c1f2b" BorderBrush="#2e3347" BorderThickness="1" Cursor="Hand">
+                        <Button Click="BtnCloseManager_Click" Grid.Column="1" Width="26" Height="26" Background="#141824" BorderBrush="#22283a" BorderThickness="1" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
-                                        <TextBlock Text="✕" FontSize="12" Foreground="#949ba4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Text="✕" FontSize="11" Foreground="#9ca3af" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
                     </Grid>
 
-                    <!-- 2. Badges de Statut en Direct -->
-                    <Border Grid.Row="1" Background="#141720" CornerRadius="12" Padding="14,10" BorderBrush="#222736" BorderThickness="1" Margin="0,0,0,14">
+                    <!-- 2. Métriques de Statut en Direct (Bento 4 blocs) -->
+                    <Border Grid.Row="1" Background="#111420" CornerRadius="10" Padding="12,8" BorderBrush="#1c2234" BorderThickness="1" Margin="0,0,0,12">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -268,29 +264,29 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="VERSION DISCORD" FontSize="9.5" FontWeight="Bold" Foreground="#656d8a"/>
-                                <TextBlock x:Name="LblDiscordVersion" Text="1.0.9255" FontSize="12" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,2,0,0"/>
+                                <TextBlock Text="DISCORD" FontSize="9" FontWeight="Bold" Foreground="#5e6682"/>
+                                <TextBlock x:Name="LblDiscordVersion" Text="1.0.9255" FontSize="11.5" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,2,0,0"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="PATCH VENCORD" FontSize="9.5" FontWeight="Bold" Foreground="#656d8a"/>
-                                <TextBlock x:Name="LblVencordStatus" Text="✓ ACTIF" FontSize="12" FontWeight="Bold" Foreground="#57F287" Margin="0,2,0,0"/>
+                                <TextBlock Text="VENCORD" FontSize="9" FontWeight="Bold" Foreground="#5e6682"/>
+                                <TextBlock x:Name="LblVencordStatus" Text="✓ ACTIF" FontSize="11.5" FontWeight="Bold" Foreground="#10B981" Margin="0,2,0,0"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2">
-                                <TextBlock Text="OPENASAR" FontSize="9.5" FontWeight="Bold" Foreground="#656d8a"/>
-                                <TextBlock x:Name="LblOpenAsarStatus" Text="NON INSTALLÉ" FontSize="12" FontWeight="Bold" Foreground="#949ba4" Margin="0,2,0,0"/>
+                                <TextBlock Text="OPENASAR" FontSize="9" FontWeight="Bold" Foreground="#5e6682"/>
+                                <TextBlock x:Name="LblOpenAsarStatus" Text="NON INSTALLÉ" FontSize="11.5" FontWeight="Bold" Foreground="#9ca3af" Margin="0,2,0,0"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="3">
-                                <TextBlock Text="RACCOURCI MENU" FontSize="9.5" FontWeight="Bold" Foreground="#656d8a"/>
-                                <TextBlock x:Name="LblShortcutStatus" Text="✓ VENCORDEX" FontSize="12" FontWeight="Bold" Foreground="#57F287" Margin="0,2,0,0"/>
+                                <TextBlock Text="RACCOURCI" FontSize="9" FontWeight="Bold" Foreground="#5e6682"/>
+                                <TextBlock x:Name="LblShortcutStatus" Text="✓ PROTÉGÉ" FontSize="11.5" FontWeight="Bold" Foreground="#10B981" Margin="0,2,0,0"/>
                             </StackPanel>
                         </Grid>
                     </Border>
 
-                    <!-- 3. Cartes d'Actions (Grille 2x2) -->
-                    <Grid Grid.Row="2" Margin="0,0,0,12">
+                    <!-- 3. Cartes d'Actions Épurées -->
+                    <Grid Grid.Row="2" Margin="0,0,0,10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="8"/>
@@ -303,29 +299,29 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- CARTE 1 : RACCOURCIS WINDOWS -->
-                        <Border Grid.Row="0" Grid.Column="0" Background="#141722" CornerRadius="12" Padding="14" BorderBrush="#202535" BorderThickness="1">
+                        <Border Grid.Row="0" Grid.Column="0" Background="#111420" CornerRadius="10" Padding="12" BorderBrush="#1c2234" BorderThickness="1">
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="🔗 RACCOURCIS WINDOWS" FontSize="10.5" FontWeight="ExtraBold" Foreground="#8da0f9" Margin="0,0,0,8"/>
+                                <TextBlock Text="🔗 RACCOURCIS DISCORD" FontSize="10" FontWeight="Bold" Foreground="#8da0f9" Margin="0,0,0,6"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="6"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Click="BtnPatchShortcut_Click" Grid.Column="0" Height="34" Background="#5865F2" Cursor="Hand">
+                                    <Button Click="BtnPatchShortcut_Click" Grid.Column="0" Height="32" Background="#5865F2" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
                                                 <Border Background="{TemplateBinding Background}" CornerRadius="6">
-                                                    <TextBlock Text="Patcher raccourci" FontSize="11" FontWeight="Bold" Foreground="#fff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Patcher (Auto)" FontSize="10.5" FontWeight="Bold" Foreground="#fff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
-                                    <Button Click="BtnUnpatchShortcut_Click" Grid.Column="2" Height="34" Background="#1e2230" Cursor="Hand">
+                                    <Button Click="BtnUnpatchShortcut_Click" Grid.Column="2" Height="32" Background="#161a26" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" BorderBrush="#2c3247" BorderThickness="1" CornerRadius="6">
-                                                    <TextBlock Text="Restaurer original" FontSize="11" FontWeight="SemiBold" Foreground="#b5bac1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#22283a" BorderThickness="1" CornerRadius="6">
+                                                    <TextBlock Text="Restaurer original" FontSize="10.5" FontWeight="SemiBold" Foreground="#d1d5db" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
@@ -334,30 +330,30 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- CARTE 2 : OPENASAR & PATCHES -->
-                        <Border Grid.Row="0" Grid.Column="2" Background="#141722" CornerRadius="12" Padding="14" BorderBrush="#202535" BorderThickness="1">
+                        <!-- CARTE 2 : OPENASAR & PERFORMANCE -->
+                        <Border Grid.Row="0" Grid.Column="2" Background="#111420" CornerRadius="10" Padding="12" BorderBrush="#1c2234" BorderThickness="1">
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="⚡ OPENASAR (OPTIMISATION)" FontSize="10.5" FontWeight="ExtraBold" Foreground="#eb459e" Margin="0,0,0,8"/>
+                                <TextBlock Text="⚡ OPENASAR (PERFORMANCE)" FontSize="10" FontWeight="Bold" Foreground="#8da0f9" Margin="0,0,0,6"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="6"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Click="BtnInstallOpenAsar_Click" Grid.Column="0" Height="34" Background="#eb459e" Cursor="Hand">
+                                    <Button Click="BtnInstallOpenAsar_Click" Grid.Column="0" Height="32" Background="#1c2234" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="6">
-                                                    <TextBlock Text="Installer OpenAsar" FontSize="11" FontWeight="Bold" Foreground="#fff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#2d354e" BorderThickness="1" CornerRadius="6">
+                                                    <TextBlock Text="Installer OpenAsar" FontSize="10.5" FontWeight="Bold" Foreground="#8da0f9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
-                                    <Button Click="BtnUninstallOpenAsar_Click" Grid.Column="2" Height="34" Background="#1e2230" Cursor="Hand">
+                                    <Button Click="BtnUninstallOpenAsar_Click" Grid.Column="2" Height="32" Background="#161a26" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" BorderBrush="#2c3247" BorderThickness="1" CornerRadius="6">
-                                                    <TextBlock Text="Retirer OpenAsar" FontSize="11" FontWeight="SemiBold" Foreground="#b5bac1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#22283a" BorderThickness="1" CornerRadius="6">
+                                                    <TextBlock Text="Retirer" FontSize="10.5" FontWeight="SemiBold" Foreground="#d1d5db" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
@@ -366,30 +362,30 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- CARTE 3 : SAUVEGARDE DES PRÉFÉRENCES -->
-                        <Border Grid.Row="2" Grid.Column="0" Background="#141722" CornerRadius="12" Padding="14" BorderBrush="#202535" BorderThickness="1">
+                        <!-- CARTE 3 : PRÉFÉRENCES & THÈMES (ZIP) -->
+                        <Border Grid.Row="2" Grid.Column="0" Background="#111420" CornerRadius="10" Padding="12" BorderBrush="#1c2234" BorderThickness="1">
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="💾 PRÉFÉRENCES &amp; THÈMES VENCORD" FontSize="10.5" FontWeight="ExtraBold" Foreground="#57F287" Margin="0,0,0,8"/>
+                                <TextBlock Text="💾 SAUVEGARDE PRÉFÉRENCES (ZIP)" FontSize="10" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,6"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="6"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Click="BtnBackupPreferences_Click" Grid.Column="0" Height="34" Background="#238636" Cursor="Hand">
+                                    <Button Click="BtnBackupPreferences_Click" Grid.Column="0" Height="32" Background="#142b20" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="6">
-                                                    <TextBlock Text="💾 Exporter Backup" FontSize="11" FontWeight="Bold" Foreground="#fff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#1e4432" BorderThickness="1" CornerRadius="6">
+                                                    <TextBlock Text="Sauvegarder" FontSize="10.5" FontWeight="Bold" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
-                                    <Button Click="BtnRestorePreferences_Click" Grid.Column="2" Height="34" Background="#1e2230" Cursor="Hand">
+                                    <Button Click="BtnRestorePreferences_Click" Grid.Column="2" Height="32" Background="#161a26" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" BorderBrush="#2c3247" BorderThickness="1" CornerRadius="6">
-                                                    <TextBlock Text="📥 Importer Backup" FontSize="11" FontWeight="SemiBold" Foreground="#b5bac1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#22283a" BorderThickness="1" CornerRadius="6">
+                                                    <TextBlock Text="Importer ZIP" FontSize="10.5" FontWeight="SemiBold" Foreground="#d1d5db" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
@@ -398,30 +394,30 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- CARTE 4 : RESTAURER DISCORD & LANCER -->
-                        <Border Grid.Row="2" Grid.Column="2" Background="#141722" CornerRadius="12" Padding="14" BorderBrush="#202535" BorderThickness="1">
+                        <!-- CARTE 4 : RESTAURATION & LANCEMENT -->
+                        <Border Grid.Row="2" Grid.Column="2" Background="#111420" CornerRadius="10" Padding="12" BorderBrush="#1c2234" BorderThickness="1">
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="🛡️ RESTAURATION &amp; LANCEMENT" FontSize="10.5" FontWeight="ExtraBold" Foreground="#fee75c" Margin="0,0,0,8"/>
+                                <TextBlock Text="🛡️ RESTAURATION &amp; ACTIONS" FontSize="10" FontWeight="Bold" Foreground="#9ca3af" Margin="0,0,0,6"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="6"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Click="BtnRestoreDiscordClean_Click" Grid.Column="0" Height="34" Background="#2c1f24" BorderBrush="#522432" BorderThickness="1" Cursor="Hand">
+                                    <Button Click="BtnRestoreDiscordClean_Click" Grid.Column="0" Height="32" Background="#261b1f" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
-                                                    <TextBlock Text="Retirer tous patchs" FontSize="11" FontWeight="Bold" Foreground="#f38ba8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#42252c" BorderThickness="1" CornerRadius="6">
+                                                    <TextBlock Text="Dépatcher Discord" FontSize="10" FontWeight="SemiBold" Foreground="#f87171" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
-                                    <Button Click="BtnLaunchDiscordNow_Click" Grid.Column="2" Height="34" Background="#5865F2" Cursor="Hand">
+                                    <Button Click="BtnLaunchDiscordNow_Click" Grid.Column="2" Height="32" Background="#5865F2" Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
                                                 <Border Background="{TemplateBinding Background}" CornerRadius="6">
-                                                    <TextBlock Text="🎮 Lancer Discord" FontSize="11" FontWeight="Bold" Foreground="#fff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="🎮 Lancer Discord" FontSize="10.5" FontWeight="Bold" Foreground="#fff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
                                         </Button.Template>
@@ -431,14 +427,9 @@
                         </Border>
                     </Grid>
 
-                    <!-- 4. Barre de Log / Notification d'action en bas -->
-                    <Border Grid.Row="3" Background="#0b0d12" CornerRadius="8" Padding="12,8" BorderBrush="#1c202c" BorderThickness="1">
-                        <Grid>
-                            <TextBlock x:Name="LblManagerLog" Text="Prêt. Sélectionnez une action ci-dessus." FontSize="11.5" Foreground="#8da0f9" TextTrimming="CharacterEllipsis"/>
-                            <Button Click="BtnOpenBackupsFolder_Click" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Cursor="Hand">
-                                <TextBlock Text="📁 Ouvrir dossier Backups" FontSize="11" Foreground="#656d8a" TextDecorations="Underline"/>
-                            </Button>
-                        </Grid>
+                    <!-- 4. Journal / Console de statut -->
+                    <Border Grid.Row="3" Background="#090b12" CornerRadius="6" Padding="10,6" BorderBrush="#181c2b" BorderThickness="1">
+                        <TextBlock x:Name="LblManagerLog" Text="Prêt. Sélectionnez une action ci-dessus." FontSize="11" Foreground="#9ca3af" TextTrimming="CharacterEllipsis"/>
                     </Border>
                 </Grid>
 
@@ -446,3 +437,5 @@
         </Border>
     </Grid>
 </Window>
+
+

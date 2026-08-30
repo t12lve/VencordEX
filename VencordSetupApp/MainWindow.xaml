@@ -1,11 +1,11 @@
-<Window x:Class="VencordSetup.MainWindow"
+﻿<Window x:Class="VencordSetup.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Installation de VencordEX" 
-        Height="420" Width="580"
+        Height="410" Width="560"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -15,12 +15,12 @@
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
 
     <Grid Margin="12">
-        <Border CornerRadius="20" Background="#101218" BorderBrush="#252936" BorderThickness="1.2">
+        <Border CornerRadius="16" Background="#0c0e16" BorderBrush="#1f2436" BorderThickness="1.2">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="30" ShadowDepth="0" Color="#5865F2" Opacity="0.35"/>
+                <DropShadowEffect BlurRadius="28" ShadowDepth="0" Color="#5865F2" Opacity="0.3"/>
             </Border.Effect>
 
-            <Grid Margin="26,22,26,22">
+            <Grid Margin="24,20,24,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -35,16 +35,16 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Source="app.ico" Width="22" Height="22" Margin="0,0,10,0"/>
-                        <TextBlock Text="VENCORDEX" FontWeight="Black" FontSize="14" Foreground="#8da0f9"/>
-                        <TextBlock Text=" • ASSISTANT D'INSTALLATION" FontWeight="Bold" FontSize="14" Foreground="#4e5366" Margin="4,0,0,0"/>
+                        <Image Source="app.ico" Width="18" Height="18" Margin="0,0,8,0"/>
+                        <TextBlock Text="VENCORDEX" FontWeight="Black" FontSize="13" Foreground="#8da0f9"/>
+                        <TextBlock Text=" • ASSISTANT D'INSTALLATION" FontWeight="Bold" FontSize="13" Foreground="#4c536b" Margin="4,0,0,0"/>
                     </StackPanel>
 
-                    <Button Click="BtnClose_Click" Grid.Column="1" Width="26" Height="26" Background="#1c1f2b" BorderBrush="#2e3347" BorderThickness="1" Cursor="Hand">
+                    <Button Click="BtnClose_Click" Grid.Column="1" Width="26" Height="26" Background="#141824" BorderBrush="#22283a" BorderThickness="1" Cursor="Hand">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
-                                    <TextBlock Text="✕" FontSize="12" Foreground="#949ba4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="✕" FontSize="11" Foreground="#9ca3af" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Button.Template>
@@ -56,28 +56,28 @@
 
                     <!-- ÉTAPE 1 : Configuration et choix du dossier -->
                     <StackPanel x:Name="StepConfigGrid" Visibility="Visible" VerticalAlignment="Center">
-                        <TextBlock Text="Installer VencordEX dans Program Files" FontSize="18" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,0,0,4"/>
-                        <TextBlock Text="Installe VencordEX de manière permanente comme une application Windows native." FontSize="12.5" Foreground="#949ba4" Margin="0,0,0,18"/>
+                        <TextBlock Text="Installer VencordEX dans Program Files" FontSize="17" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,0,0,3"/>
+                        <TextBlock Text="Installe VencordEX de manière permanente comme une application Windows native." FontSize="12" Foreground="#9ca3af" Margin="0,0,0,16"/>
 
                         <!-- Sélecteur de chemin -->
-                        <TextBlock Text="DOSSIER DE DESTINATION" FontSize="10.5" FontWeight="Bold" Foreground="#656d8a" Margin="0,0,0,6"/>
-                        <Grid Margin="0,0,0,16">
+                        <TextBlock Text="DOSSIER DE DESTINATION" FontSize="10" FontWeight="Bold" Foreground="#5e6682" Margin="0,0,0,5"/>
+                        <Grid Margin="0,0,0,14">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="8"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border Grid.Column="0" Background="#161822" CornerRadius="8" BorderBrush="#2c3247" BorderThickness="1" Padding="10,6">
+                            <Border Grid.Column="0" Background="#111420" CornerRadius="8" BorderBrush="#1c2234" BorderThickness="1" Padding="10,5">
                                 <TextBox x:Name="TxtInstallPath" Text="C:\Program Files\VencordEX" 
-                                         Background="Transparent" BorderThickness="0" Foreground="#FFFFFF" FontSize="12.5" VerticalAlignment="Center"/>
+                                         Background="Transparent" BorderThickness="0" Foreground="#FFFFFF" FontSize="12" VerticalAlignment="Center"/>
                             </Border>
 
-                            <Button Click="BtnBrowse_Click" Grid.Column="2" Height="36" Padding="14,0" Background="#1c1f2b" BorderBrush="#2e3347" BorderThickness="1" Cursor="Hand">
+                            <Button Click="BtnBrowse_Click" Grid.Column="2" Height="34" Padding="12,0" Background="#161a26" BorderBrush="#22283a" BorderThickness="1" Cursor="Hand">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8" Padding="{TemplateBinding Padding}">
-                                            <TextBlock Text="Parcourir..." FontSize="12" Foreground="#b5bac1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Parcourir..." FontSize="11.5" Foreground="#d1d5db" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
                                 </Button.Template>
@@ -85,32 +85,32 @@
                         </Grid>
 
                         <!-- Options -->
-                        <StackPanel Margin="0,0,0,10">
-                            <CheckBox x:Name="ChkPatchShortcuts" IsChecked="True" Margin="0,0,0,8">
-                                <TextBlock Text="Mettre à jour les raccourcis Discord pour l'auto-patch Vencord" FontSize="12" Foreground="#b5bac1"/>
+                        <StackPanel Margin="0,0,0,8">
+                            <CheckBox x:Name="ChkPatchShortcuts" IsChecked="True" Margin="0,0,0,7">
+                                <TextBlock Text="Mettre à jour les raccourcis Discord pour l'auto-patch Vencord" FontSize="11.5" Foreground="#d1d5db"/>
                             </CheckBox>
-                            <CheckBox x:Name="ChkCreateSettingsShortcut" IsChecked="True" Margin="0,0,0,8">
-                                <TextBlock Text="Créer le raccourci VencordEX Paramètres dans le menu Démarrer" FontSize="12" Foreground="#b5bac1"/>
+                            <CheckBox x:Name="ChkCreateSettingsShortcut" IsChecked="True" Margin="0,0,0,7">
+                                <TextBlock Text="Créer le raccourci VencordEX Paramètres dans le menu Démarrer" FontSize="11.5" Foreground="#d1d5db"/>
                             </CheckBox>
                             <CheckBox x:Name="ChkRegisterUninstall" IsChecked="True">
-                                <TextBlock Text="Enregistrer dans Applications et fonctionnalités (Désinstallation facile)" FontSize="12" Foreground="#b5bac1"/>
+                                <TextBlock Text="Enregistrer dans Applications et fonctionnalités (Désinstallation facile)" FontSize="11.5" Foreground="#d1d5db"/>
                             </CheckBox>
                         </StackPanel>
                     </StackPanel>
 
                     <!-- ÉTAPE 2 : Progression de l'installation -->
                     <StackPanel x:Name="StepProgressGrid" Visibility="Collapsed" VerticalAlignment="Center">
-                        <TextBlock x:Name="LblProgressStatus" Text="Copie des fichiers dans Program Files..." FontSize="16" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,0,0,6"/>
-                        <TextBlock x:Name="LblProgressSub" Text="Veuillez patienter quelques instants..." FontSize="12.5" Foreground="#949ba4" Margin="0,0,0,16"/>
+                        <TextBlock x:Name="LblProgressStatus" Text="Copie des fichiers dans Program Files..." FontSize="15" FontWeight="Bold" Foreground="#FFFFFF" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="LblProgressSub" Text="Veuillez patienter quelques instants..." FontSize="12" Foreground="#9ca3af" Margin="0,0,0,14"/>
 
-                        <Border Height="12" Background="#161822" CornerRadius="6" BorderBrush="#202433" BorderThickness="1">
+                        <Border Height="10" Background="#111420" CornerRadius="5" BorderBrush="#1c2234" BorderThickness="1">
                             <Grid ClipToBounds="True">
-                                <Border x:Name="InstallProgressBar" HorizontalAlignment="Left" Width="0" CornerRadius="5">
+                                <Border x:Name="InstallProgressBar" HorizontalAlignment="Left" Width="0" CornerRadius="4">
                                     <Border.Background>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                             <GradientStop Color="#5865F2" Offset="0.0"/>
-                                            <GradientStop Color="#854FEE" Offset="0.5"/>
-                                            <GradientStop Color="#57F287" Offset="1.0"/>
+                                            <GradientStop Color="#707DF7" Offset="0.5"/>
+                                            <GradientStop Color="#10B981" Offset="1.0"/>
                                         </LinearGradientBrush>
                                     </Border.Background>
                                 </Border>
@@ -120,22 +120,22 @@
 
                     <!-- ÉTAPE 3 : Terminé avec succès -->
                     <StackPanel x:Name="StepSuccessGrid" Visibility="Collapsed" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Border Width="34" Height="34" CornerRadius="17" Background="#238636" Margin="0,0,12,0">
-                                <TextBlock Text="✓" FontSize="20" FontWeight="Bold" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <Border Width="30" Height="30" CornerRadius="15" Background="#10B981" Margin="0,0,10,0">
+                                <TextBlock Text="✓" FontSize="17" FontWeight="Bold" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Installation terminée avec succès !" FontSize="18" FontWeight="Bold" Foreground="#FFFFFF"/>
-                                <TextBlock Text="VencordEX est prêt à l'emploi dans Program Files." FontSize="12.5" Foreground="#57F287"/>
+                                <TextBlock Text="Installation terminée avec succès !" FontSize="16" FontWeight="Bold" Foreground="#FFFFFF"/>
+                                <TextBlock Text="VencordEX est prêt à l'emploi dans Program Files." FontSize="11.5" Foreground="#10B981"/>
                             </StackPanel>
                         </StackPanel>
 
-                        <Border Background="#141722" CornerRadius="10" Padding="14" BorderBrush="#202535" BorderThickness="1" Margin="0,10,0,14">
+                        <Border Background="#111420" CornerRadius="8" Padding="12" BorderBrush="#1c2234" BorderThickness="1" Margin="0,8,0,10">
                             <StackPanel>
-                                <TextBlock Text="EMPLACEMENT :" FontSize="9.5" FontWeight="Bold" Foreground="#656d8a"/>
-                                <TextBlock x:Name="LblFinalPath" Text="C:\Program Files\VencordEX" FontSize="12" Foreground="#FFFFFF" Margin="0,2,0,8"/>
-                                <TextBlock Text="• Discord démarrera désormais automatiquement avec VencordEX." FontSize="11.5" Foreground="#949ba4"/>
-                                <TextBlock Text="• Vous pouvez désinstaller à tout moment depuis les Paramètres Windows." FontSize="11.5" Foreground="#949ba4" Margin="0,3,0,0"/>
+                                <TextBlock Text="EMPLACEMENT :" FontSize="9" FontWeight="Bold" Foreground="#5e6682"/>
+                                <TextBlock x:Name="LblFinalPath" Text="C:\Program Files\VencordEX" FontSize="11.5" Foreground="#FFFFFF" Margin="0,2,0,6"/>
+                                <TextBlock Text="• Discord démarrera désormais automatiquement avec VencordEX." FontSize="11" Foreground="#9ca3af"/>
+                                <TextBlock Text="• Vous pouvez désinstaller à tout moment depuis les Paramètres Windows." FontSize="11" Foreground="#9ca3af" Margin="0,2,0,0"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -143,14 +143,14 @@
                 </Grid>
 
                 <!-- 3. Boutons d'action en bas -->
-                <Grid Grid.Row="2" Margin="0,10,0,0">
+                <Grid Grid.Row="2" Margin="0,8,0,0">
                     <!-- Bouton Installer (Étape 1) -->
                     <Grid x:Name="BtnGroupConfig" Visibility="Visible">
-                        <Button Click="BtnInstall_Click" Height="42" Background="#5865F2" Cursor="Hand">
+                        <Button Click="BtnInstall_Click" Height="40" Background="#5865F2" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
-                                    <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="10">
-                                        <TextBlock Text="⚡ Installer VencordEX" FontSize="13.5" FontWeight="Bold" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <TextBlock Text="⚡ Installer VencordEX" FontSize="12.5" FontWeight="Bold" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
@@ -170,21 +170,21 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Click="BtnLaunchDiscord_Click" Grid.Column="0" Height="42" Background="#5865F2" Cursor="Hand">
+                        <Button Click="BtnLaunchDiscord_Click" Grid.Column="0" Height="40" Background="#5865F2" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                                        <TextBlock Text="🎮 Lancer Discord" FontSize="13" FontWeight="Bold" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <TextBlock Text="🎮 Lancer Discord" FontSize="12.5" FontWeight="Bold" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
 
-                        <Button Click="BtnFinish_Click" Grid.Column="2" Height="42" Background="#1e2230" BorderBrush="#2c3247" BorderThickness="1" Cursor="Hand">
+                        <Button Click="BtnFinish_Click" Grid.Column="2" Height="40" Background="#161a26" BorderBrush="#22283a" BorderThickness="1" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
-                                        <TextBlock Text="Terminer" FontSize="13" FontWeight="SemiBold" Foreground="#b5bac1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8">
+                                        <TextBlock Text="Terminer" FontSize="12" FontWeight="SemiBold" Foreground="#d1d5db" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                 </ControlTemplate>
                             </Button.Template>
@@ -196,3 +196,4 @@
         </Border>
     </Grid>
 </Window>
+
