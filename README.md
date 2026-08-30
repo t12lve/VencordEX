@@ -6,7 +6,7 @@
 
 <p align="center">
   <b>Le lanceur autonome intelligent qui maintient Vencord injecté après chaque mise à jour de Discord.</b><br>
-  <i>Avec préchargeur fluide inspiré de SPYLT Milk, Centre de Contrôle GUI et installeur Windows Program Files.</i>
+  <i>Avec préchargeur fluide ultra-rapide, Centre de Contrôle GUI et installeur Windows Program Files.</i>
 </p>
 
 <p align="center">
@@ -58,7 +58,7 @@ Sous Windows, chaque mise à jour automatique de Discord (gérée par *Squirrel 
 ## ✨ Fonctionnalités de VencordEX
 
 - ⚡ **Auto-Patch Silencieux** : Détecte au lancement si Discord a été mis à jour et réinjecte Vencord avant que Discord n'apparaisse.
-- 🎨 **Préchargeur SPYLT Milk** : Un écran de chargement moderne et soigné avec compteur `00%` ➔ `100%`, dégradé dynamique et signature :  
+- 🎨 **Préchargeur Fluide (Motion Preloader)** : Un écran de chargement moderne et soigné avec compteur `00%` ➔ `100%`, dégradé dynamique et signature :  
   `t12lve le vibecodeur de l'extreme`.
 - 🛡️ **Dialogue Intelligent (Discord déjà ouvert)** :  
   Si Discord est déjà en cours d'utilisation lors d'une détection de mise à jour, VencordEX ne coupe jamais votre appel vocal sans prévenir. Une boîte de dialogue vous propose :

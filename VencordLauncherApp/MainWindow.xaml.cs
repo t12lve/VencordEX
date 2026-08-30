@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -126,7 +126,7 @@ namespace VencordLauncher
                 PreloaderGrid.Visibility = Visibility.Visible;
                 ConfirmGrid.Visibility = Visibility.Collapsed;
                 ManagerGrid.Visibility = Visibility.Collapsed;
-                await RunSpyltPreloaderAsync(launchDiscordAfter: false);
+                await RunMotionPreloaderAsync(launchDiscordAfter: false);
                 return;
             }
 
@@ -149,7 +149,7 @@ namespace VencordLauncher
             PreloaderGrid.Visibility = Visibility.Visible;
             ConfirmGrid.Visibility = Visibility.Collapsed;
             ManagerGrid.Visibility = Visibility.Collapsed;
-            await RunSpyltPreloaderAsync(launchDiscordAfter: true);
+            await RunMotionPreloaderAsync(launchDiscordAfter: true);
         }
 
         private void DetectDiscordVersion()
@@ -723,7 +723,7 @@ namespace VencordLauncher
 
             await KillDiscordAsync();
 
-            await RunSpyltPreloaderAsync(launchDiscordAfter: true);
+            await RunMotionPreloaderAsync(launchDiscordAfter: true);
         }
 
         private async void BtnPatchNextLaunch_Click(object sender, RoutedEventArgs e)
@@ -778,7 +778,7 @@ namespace VencordLauncher
             await Task.Delay(150);
         }
 
-        private async Task RunSpyltPreloaderAsync(bool launchDiscordAfter)
+        private async Task RunMotionPreloaderAsync(bool launchDiscordAfter)
         {
             SetStatus("SYNCHRONISATION", "Vérification des fichiers de Discord...", "VÉRIFICATION");
             await AnimateProgressAsync(0, 25, 300);

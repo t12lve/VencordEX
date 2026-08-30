@@ -44,7 +44,7 @@
             <Grid Margin="24,20,24,20">
 
                 <!-- ═══════════════════════════════════════════════════════ -->
-                <!-- ÉCRAN 1 : PRÉCHARGEUR SPYLT MILK                     -->
+                <!-- ÉCRAN 1 : PRÉCHARGEUR ANIMÉ                          -->
                 <!-- ═══════════════════════════════════════════════════════ -->
                 <Grid x:Name="PreloaderGrid" Visibility="Visible">
                     <Grid.RowDefinitions>
@@ -96,7 +96,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- Section Centrale : Compteur SPYLT Milk -->
+                    <!-- Section Centrale : Compteur -->
                     <Grid Grid.Row="1" VerticalAlignment="Center" Margin="0,15,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -119,7 +119,7 @@
                         </TextBlock>
                     </Grid>
 
-                    <!-- Barre de progression SPYLT Milk -->
+                    <!-- Barre de progression -->
                     <Grid Grid.Row="2" Margin="0,5,0,12">
                         <Border Height="12" Background="#161822" CornerRadius="6" BorderBrush="#202433" BorderThickness="1">
                             <Grid ClipToBounds="True">
