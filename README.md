@@ -1,65 +1,111 @@
-# Vencord
+# 🚀 VencordEX • Discord Auto-Patcher & Suite Standalone
 
-![](https://img.shields.io/github/package-json/v/Vendicated/Vencord?style=for-the-badge&logo=github&logoColor=d3869b&label=&color=1d2021&labelColor=282828)
-[![Codeberg Mirror](https://img.shields.io/static/v1?style=for-the-badge&label=Codeberg%20Mirror&message=codeberg.org/Vee/cord&color=2185D0&logo=data:image/png;base64,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)](https://codeberg.org/Vee/cord)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vendicated/Vencord/main/src/assets/icon.png" width="100" height="100" alt="Vencord Logo"/>
+</p>
 
-The cutest Discord client mod
+<p align="center">
+  <b>Le lanceur autonome intelligent qui maintient Vencord injecté après chaque mise à jour de Discord.</b><br>
+  <i>Avec préchargeur fluide inspiré de SPYLT Milk, Centre de Contrôle GUI et installeur Windows Program Files.</i>
+</p>
 
-![](https://github.com/user-attachments/assets/3fac98c0-c411-4d2a-97a3-13b7da8687a2)
+<p align="center">
+  <a href="https://t12lve.github.io/VencordEX/">🌐 Guide interactif (GitHub Pages)</a> •
+  <a href="#-politique-de-lapplication--éthique">📜 Politique & Éthique</a> •
+  <a href="#-crédits-et-hommage-à-vencord">💖 Crédits à Vencord</a> •
+  <a href="#-fonctionnalités">✨ Fonctionnalités</a> •
+  <a href="#-téléchargements--installation">📦 Installation</a>
+</p>
 
-## Features
+---
 
--   Easy to install
--   [100+ built in plugins](https://vencord.dev/plugins)
--   Fairly lightweight despite the many inbuilt plugins
--   Excellent Browser Support: Run Vencord in your Browser via extension or UserScript
--   Works on any Discord branch: Stable, Canary or PTB all work
--   Custom CSS and Themes: Inbuilt css editor with support to import any css files (including BetterDiscord themes)
--   Privacy friendly: blocks Discord analytics & crash reporting out of the box and has no telemetry
--   Maintained very actively, broken plugins are usually fixed within 12 hours
--   Settings sync: Keep your plugins and their settings synchronised between devices / apps (optional)
+## 📜 Politique de l'Application & Éthique
 
+### 🎯 La Raison d'être de VencordEX
+Sous Windows, chaque mise à jour automatique de Discord (gérée par *Squirrel Updater*) recrée un nouveau répertoire `app-1.0.xxxx` contenant le fichier `app.asar` d'origine non patché. Résultat : Vencord "disparaît" silencieusement après une mise à jour, obligeant l'utilisateur à réexécuter manuellement l'installateur.
 
-## Installing / Uninstalling
+**VencordEX a été conçu pour éliminer définitivement cette corvée.**
 
-Visit https://vencord.dev/download
+### 🛡️ Nos Engagements & Principes :
+1. **Compagnon, pas un remplacement** :  
+   VencordEX n'est **PAS** un fork divergent du code de Vencord. C'est un wrapper / gardien de démarrage léger (~1 Mo) sous Windows qui veille à ce que l'injection officielle de Vencord reste active au fil des mises à jour de Discord.
+2. **Utilisation des binaires officiels** :  
+   VencordEX télécharge et utilise exclusivement l'utilitaire officiel [`VencordInstallerCli`](https://github.com/Vencord/Installer) et les distributions officielles de Vencord hébergées sur GitHub.
+3. **Zéro Télémétrie, Zéro Espionnage, 100% Local** :  
+   Aucune donnée personnelle n'est collectée, traquée ou transmise. Le code source est intégralement public et transparent.
+4. **Performance Absolue (Zéro ralentissement)** :  
+   Lorsque Discord est déjà patché (99% du temps), VencordEX lance Discord en moins de **20 millisecondes** et quitte immédiatement la mémoire vive. Aucune fenêtre ne s'affiche et aucun processus ne tourne en tâche de fond.
 
-## Join our Support/Community Server
+---
 
-https://discord.gg/D9uwnFnqmd
+## 💖 Crédits et Hommage à Vencord
 
-## Sponsors
+> ### 👑 Tout le mérite revient à l'équipe de Vencord !
+> 
+> **VencordEX ne serait rien sans le travail remarquable de [Vendicated](https://github.com/Vendicated) et de l'ensemble des contributeurs du projet [Vencord](https://github.com/Vendicated/Vencord).**
+>
+> Vencord est sans conteste le client mod Discord le plus élégant, rapide, léger et sécurisé jamais créé. Les plus de 100 plugins intégrés, l'isolation sandboxée, la compatibilité cross-plateforme et le support instantané des mises à jour Discord sont l'œuvre de leur talent.
+>
+> 🔗 **Ressources officielles de Vencord :**
+> - **Site officiel** : [vencord.dev](https://vencord.dev)
+> - **Dépôt GitHub** : [github.com/Vendicated/Vencord](https://github.com/Vendicated/Vencord)
+> - **Communauté Discord** : [discord.gg/D9uwnFnqmd](https://discord.gg/D9uwnFnqmd)
+>
+> *Si vous appréciez Vencord, n'hésitez pas à soutenir le projet officiel et à leur donner une étoile sur GitHub !*
 
-|     **Thanks a lot to all Vencord [sponsors](https://github.com/sponsors/Vendicated)!!**     |
-| :------------------------------------------------------------------------------------------: |
-|   [![](https://meow.vendicated.dev/sponsors.png)](https://github.com/sponsors/Vendicated)    |
-| *generated using [github-sponsor-graph](https://github.com/Vendicated/github-sponsor-graph)* |
+---
 
+## ✨ Fonctionnalités de VencordEX
 
-## Star History
+- ⚡ **Auto-Patch Silencieux** : Détecte au lancement si Discord a été mis à jour et réinjecte Vencord avant que Discord n'apparaisse.
+- 🎨 **Préchargeur SPYLT Milk** : Un écran de chargement moderne et soigné avec compteur `00%` ➔ `100%`, dégradé dynamique et signature :  
+  `t12lve le vibecodeur de l'extreme`.
+- 🛡️ **Dialogue Intelligent (Discord déjà ouvert)** :  
+  Si Discord est déjà en cours d'utilisation lors d'une détection de mise à jour, VencordEX ne coupe jamais votre appel vocal sans prévenir. Une boîte de dialogue vous propose :
+  - **⚡ Oui, redémarrer** : Ferme proprement la session, patche et relance Discord.
+  - **⏱ Au prochain lancement** : Patche en tâche de fond et conserve votre appel / session active sans interruption.
+- 🎛️ **Centre de Contrôle Dédié (`VencordEXSettings.exe`)** :
+  - **🔗 Gestion des Raccourcis** : Patcher ou restaurer les raccourcis Windows (Menu Démarrer, dossier `Discord Inc`, Barre des tâches, Bureau).
+  - **⚡ Intégration d'OpenAsar** : Installer ou retirer OpenAsar en 1 clic pour optimiser les performances de Discord.
+  - **🛡️ Restauration Discord** : Dépatcher Discord à 100% pour revenir à la version officielle originale.
+  - **💾 Sauvegarde & Restauration de vos Préférences** : Exporte vos plugins activés (`settings.json`), votre CSS rapide (`quickCss.css`) et tous vos thèmes (`.theme.css`) dans une archive ZIP horodatée réimportable en 1 clic.
+- 📦 **Véritable Installeur Windows (`VencordEX-Setup.exe`)** :  
+  Installe VencordEX dans `C:\Program Files\VencordEX` avec élévation Administrateur et enregistrement dans **« Applications et fonctionnalités »** de Windows pour une désinstallation propre.
 
-<a href="https://star-history.com/#Vendicated/Vencord&Timeline">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Vendicated/Vencord&type=Timeline&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Vendicated/Vencord&type=Timeline" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Vendicated/Vencord&type=Timeline" />
-  </picture>
-</a>
+---
 
-## Disclaimer
+## 📦 Téléchargements & Utilisation
 
-Discord is trademark of Discord Inc. and solely mentioned for the sake of descriptivity.
-Mention of it does not imply any affiliation with or endorsement by Discord Inc.
+Téléchargez la dernière version dans le dossier [`prod/`](prod/) :
 
-<details>
-<summary>Using Vencord violates Discord's terms of service</summary>
+| Fichier | Utilisation |
+| :--- | :--- |
+| **`VencordEX-Setup.exe`** | **Recommandé** : L'installeur Windows officiel. Double-cliquez pour installer dans `C:\Program Files\VencordEX`. |
+| **`VencordEX.exe`** | Version portable autonome : lance et auto-patche Discord sans installation. |
+| **`VencordEXSettings.exe`** | Version portable : ouvre directement le Centre de Contrôle et les paramètres. |
+| **`Mode-Operatoire.html`** | Le guide interactif hors-ligne avec simulateur web de préchargeur. |
 
-Client modifications are against Discord’s Terms of Service.
+---
 
-However, Discord is pretty indifferent about them and there are no known cases of users getting banned for using client mods! So you should generally be fine as long as you don’t use any plugins that implement abusive behaviour. But no worries, all inbuilt plugins are safe to use!
+## 🛠️ Compilation depuis les sources
 
-Regardless, if your account is very important to you and it getting disabled would be a disaster for you, you should probably not use any client mods (not exclusive to Vencord), just to be safe
+Prérequis : [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 
-Additionally, make sure not to post screenshots with Vencord in a server where you might get banned for it
+```powershell
+# 1. Cloner le dépôt
+git clone https://github.com/t12lve/VencordEX.git
+cd VencordEX
 
-</details>
+# 2. Compiler VencordEX
+dotnet publish "VencordLauncherApp" -c Release -o "prod"
+
+# 3. Compiler l'installeur Windows
+dotnet publish "VencordSetupApp" -c Release -o "prod"
+```
+
+---
+
+<p align="center">
+  Développé avec passion par <b>t12lve le vibecodeur de l'extreme</b>.<br>
+  Basé sur le travail exceptionnel de <b>Vendicated & la communauté Vencord</b>.
+</p>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <AssemblyName>VencordEX-Setup</AssemblyName>
+    <AssemblyTitle>Installation de VencordEX</AssemblyTitle>
+    <AssemblyProduct>VencordEX Setup</AssemblyProduct>
+    <AssemblyDescription>Programme d'installation de VencordEX pour Windows</AssemblyDescription>
+    <AssemblyCompany>VencordEX</AssemblyCompany>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="app.ico" />
+    <EmbeddedResource Include="..\prod\VencordEX.exe" Link="Payload\VencordEX.exe" />
+  </ItemGroup>
+
+</Project>

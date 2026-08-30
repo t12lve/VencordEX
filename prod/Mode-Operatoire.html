@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VencordEX • Launcher Standalone • Preloader SPYLT Milk</title>
+    <meta name="description" content="Guide et prévisualisation du lanceur standalone Vencord avec barre de chargement animée SPYLT Milk.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0c10;
+            --bg-secondary: #13151d;
+            --bg-card: rgba(22, 25, 35, 0.75);
+            --bg-card-hover: rgba(30, 34, 48, 0.85);
+            --border-card: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(88, 101, 242, 0.4);
+            
+            --discord-blurple: #5865f2;
+            --discord-green: #57f287;
+            --discord-yellow: #fee75c;
+            --discord-fuchsia: #eb459e;
+            --discord-purple: #854fee;
+            --accent-gradient: linear-gradient(135deg, #5865f2 0%, #854fee 50%, #eb459e 100%);
+            --spylt-gradient: linear-gradient(90deg, #5865F2 0%, #854FEE 40%, #EB459E 80%, #57F287 100%);
+
+            --text-main: #f2f3f5;
+            --text-muted: #8e95a5;
+            --text-sub: #b5bac1;
+
+            --radius-lg: 22px;
+            --radius-md: 14px;
+            --radius-sm: 8px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Effets de lumière d'arrière-plan */
+        .ambient-glow {
+            position: fixed;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            filter: blur(130px);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+            animation: floatGlow 16s infinite alternate ease-in-out;
+        }
+
+        .glow-1 {
+            top: -120px;
+            left: 10%;
+            background: #5865f2;
+        }
+
+        .glow-2 {
+            top: 45%;
+            right: -120px;
+            background: #eb459e;
+            animation-duration: 20s;
+        }
+
+        .glow-3 {
+            bottom: -100px;
+            left: 30%;
+            background: #57f287;
+            opacity: 0.2;
+            animation-duration: 18s;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, 40px) scale(1.12); }
+            100% { transform: translate(-50px, -30px) scale(0.92); }
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* Header Hero */
+        header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(88, 101, 242, 0.15);
+            border: 1px solid rgba(88, 101, 242, 0.4);
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #8da0f9;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.25);
+            backdrop-filter: blur(8px);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--discord-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--discord-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.6; }
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.3rem, 5.2vw, 3.6rem);
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 35%, #b5bac1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-sub);
+            max-width: 720px;
+            margin: 0 auto 30px;
+        }
+
+        /* Cartes & Glassmorphism */
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: var(--transition);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(88, 101, 242, 0.3);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 25px rgba(88, 101, 242, 0.12);
+        }
+
+        /* Statut d'activation en direct */
+        .status-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(90deg, rgba(87, 242, 135, 0.12) 0%, rgba(88, 101, 242, 0.12) 100%);
+            border: 1px solid rgba(87, 242, 135, 0.35);
+            border-radius: var(--radius-md);
+            padding: 20px 26px;
+            margin-bottom: 35px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .status-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(87, 242, 135, 0.2);
+            color: var(--discord-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(87, 242, 135, 0.3);
+        }
+
+        .status-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .status-text p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .status-tag {
+            background: rgba(87, 242, 135, 0.2);
+            color: var(--discord-green);
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(87, 242, 135, 0.4);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ---------------------------------------------------- */
+        /* SIMULATEUR DU PRÉCHARGEUR SPYLT MILK                */
+        /* ---------------------------------------------------- */
+        .simulator-box {
+            background: #0d0f15;
+            border: 1px solid #232738;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: inset 0 2px 20px rgba(0,0,0,0.6), 0 0 35px rgba(88, 101, 242, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spylt-mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .spylt-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .spylt-brand img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .spylt-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #8da0f9;
+            letter-spacing: 1px;
+        }
+
+        .spylt-subtitle {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #4e5366;
+            letter-spacing: 1px;
+        }
+
+        .spylt-badge {
+            background: #181c26;
+            border: 1px solid #282f42;
+            padding: 5px 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--discord-green);
+        }
+
+        .spylt-main-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 14px;
+        }
+
+        .spylt-status-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #656d8a;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .spylt-status-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .spylt-big-counter {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            font-size: clamp(3rem, 6vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 0 25px rgba(88, 101, 242, 0.45);
+            transition: color 0.3s ease;
+        }
+
+        .spylt-track {
+            width: 100%;
+            height: 14px;
+            background: #161822;
+            border-radius: 7px;
+            border: 1px solid #202433;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .spylt-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--spylt-gradient);
+            border-radius: 6px;
+            box-shadow: 0 0 16px rgba(88, 101, 242, 0.85);
+            transition: width 0.1s linear;
+        }
+
+        .spylt-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4e5366;
+            letter-spacing: 1px;
+        }
+
+        .sim-btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            background: var(--discord-blurple);
+            color: #fff;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-action:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.6);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Schéma explicatif animé */
+        .flow-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .flow-card {
+            background: rgba(22, 24, 31, 0.7);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: rgba(88, 101, 242, 0.4);
+        }
+
+        .step-num {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--discord-blurple);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+        }
+
+        .flow-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .flow-card p {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+        }
+
+        /* Blocs de code */
+        .code-snippet {
+            position: relative;
+            background: #08090d;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: #a6d1ff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        .code-snippet code {
+            white-space: nowrap;
+        }
+
+        .copy-btn {
+            background: rgba(88, 101, 242, 0.2);
+            border: 1px solid rgba(88, 101, 242, 0.4);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: var(--discord-blurple);
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+        }
+
+        .copy-btn.copied {
+            background: var(--discord-green);
+            border-color: var(--discord-green);
+            color: #0d1e11;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--border-card);
+            padding: 18px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 6px 0;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            color: #8da0f9;
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            color: var(--discord-fuchsia);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease-out;
+            color: var(--text-sub);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .faq-answer p {
+            padding-top: 12px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-card);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--discord-green);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(87, 242, 135, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Effets de fond animés -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <div class="wrapper">
+        <!-- Hero Header -->
+        <header>
+            <div class="badge-pill">
+                <span class="pulse-dot"></span>
+                <span>Exécutable Standalone .EXE Compilé • 100% Sans Console</span>
+            </div>
+            <h1>VencordEX • Standalone Launcher<br><span>Animation SPYLT Milk</span></h1>
+            <p class="subtitle">
+                Votre exécutable autonome <code>VencordEX.exe</code> est prêt ! Aucun script PowerShell, aucune invite de commande, et un préchargeur inspiré des designs Awwwards dès qu'une injection est nécessaire.
+            </p>
+        </header>
+
+        <!-- Statut opérationnel -->
+        <div class="status-banner">
+            <div class="status-info">
+                <div class="status-icon">🚀</div>
+                <div class="status-text">
+                    <h3>Exécutable autonome compilé & Raccourci Windows configuré</h3>
+                    <p>Fichier unique <code>VencordEX.exe</code> sans dépendances, avec icône officielle Discord.</p>
+                </div>
+            </div>
+            <div class="status-tag">Actif & Standalone</div>
+        </div>
+
+        <!-- PRÉVISUALISATION DU PRÉCHARGEUR SPYLT MILK -->
+        <section class="glass-panel">
+            <h2 style="font-size: 1.5rem; margin-bottom: 6px;">✨ Prévisualisation du Préchargeur (Inspiré de SPYLT Milk)</h2>
+            <p style="color: var(--text-sub); font-size: 0.95rem; margin-bottom: 20px;">
+                Voici la reproduction interactive exacte de l'animation que lance <code>VencordEX.exe</code> lorsqu'un patch ou une réparation est nécessaire :
+            </p>
+
+            <!-- Le widget simulateur -->
+            <div class="simulator-box" id="simulator">
+                <div class="spylt-mockup-header">
+                    <div class="spylt-brand">
+                        <img src="C:/Users/darkc/AppData/Local/Discord/app.ico" alt="Discord" onerror="this.style.display='none'">
+                        <span class="spylt-title">VENCORD</span>
+                        <span class="spylt-subtitle">• AUTO-PATCHER</span>
+                    </div>
+                    <div class="spylt-badge" id="simBadge">
+                        <span class="pulse-dot"></span>
+                        <span id="simBadgeLabel">INJECTION</span>
+                    </div>
+                </div>
+
+                <div class="spylt-main-row">
+                    <div>
+                        <div class="spylt-status-label" id="simStatusLabel">SYNCHRONISATION</div>
+                        <div class="spylt-status-text" id="simStatusText">Détection de la mise à jour de Discord...</div>
+                    </div>
+                    <div class="spylt-big-counter" id="simCounter">00%</div>
+                </div>
+
+                <div class="spylt-track">
+                    <div class="spylt-fill" id="simFill"></div>
+                </div>
+
+                <div class="spylt-footer">
+                    <span id="simFooter">PRÉPARATION DE DISCORD EN COURS...</span>
+                    <span>t12lve le vibecodeur de l'extreme</span>
+                </div>
+            </div>
+
+            <!-- Boutons de test -->
+            <div class="sim-btn-container">
+                <button class="btn-action" onclick="runSpyltSimulation()">
+                    <span>▶ Relancer la démo animée</span>
+                </button>
+                <button class="btn-outline" onclick="copyLocation()">
+                    <span>📁 Emplacement de VencordEX.exe</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Fiche Technique du Binaire -->
+        <section class="glass-panel">
+            <h2 style="font-size: 1.5rem; margin-bottom: 12px;">📦 Détails de l'Exécutable Standalone</h2>
+            <div class="flow-diagram">
+                <div class="flow-card">
+                    <div class="step-num">1</div>
+                    <h4>Zéro Ligne de Commande</h4>
+                    <p>C'est un véritable binaire Windows <code>.exe</code> pur. Aucune fenêtre noire ne s'ouvre, même pas 1 milliseconde.</p>
+                </div>
+                <div class="flow-card">
+                    <div class="step-num">2</div>
+                    <h4>Lancement Instantané</h4>
+                    <p>Si Discord est déjà à jour (99% du temps), Discord démarre immédiatement en 20ms sans attendre.</p>
+                </div>
+                <div class="flow-card">
+                    <div class="step-num">3</div>
+                    <h4>SPYLT Milk Preloader</h4>
+                    <p>Dès que Discord s'est mis à jour, l'animation s'affiche au centre de l'écran pendant le re-patch silencieux.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="font-size: 1.05rem; margin-bottom: 8px;">Emplacement du fichier :</h4>
+                <div class="code-snippet">
+                    <code id="exePath">f:\DBXSSD\Dropbox\FOUTOIR\vibecoding\vencordEX\Vencord\VencordEX.exe</code>
+                    <button class="copy-btn" onclick="copyCode('exePath', this)">Copier</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="glass-panel">
+            <h2 style="font-size: 1.5rem; margin-bottom: 16px;">❓ Foire Aux Questions (FAQ)</h2>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Comment tester la barre de chargement en direct sur mon PC ?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        Vous avez 2 façons simples :<br>
+                        1. Maintenez la touche <strong>Maj (Shift)</strong> enfoncée tout en double-cliquant sur <code>VencordEX.exe</code>.<br>
+                        2. Ou lancez-le avec l'option <code>--preview</code>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Mon raccourci habituel ouvre-t-il bien cet exécutable ?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        Oui ! Le raccourci Discord de votre menu Démarrer a été mis à jour pour pointer directement vers <code>VencordEX.exe</code> avec l'icône originale de Discord.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Que se passe-t-il si Discord est déjà ouvert lors d'une mise à jour ?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        Une boîte de dialogue moderne vous laisse le choix sans jamais couper votre session par surprise :<br>
+                        • <strong>⚡ Oui, redémarrer</strong> : Ferme la session Discord actuelle, affiche l'animation SPYLT Milk, applique le patch et rouvre Discord avec Vencord.<br>
+                        • <strong>⏱ Au prochain lancement</strong> : Ne coupe <em>pas</em> votre appel ou votre utilisation en cours. Le patch est appliqué en coulisses sur les fichiers de la nouvelle version, et Vencord sera prêt au prochain lancement naturel !
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Faut-il que Vencord soit déjà installé sur mon PC ?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        <strong>Non, pas du tout !</strong> VencordEX s'occupe de tout : si Vencord n'est pas encore installé ou présent sur votre système, le lanceur télécharge automatiquement la dernière version officielle depuis GitHub et l'injecte dans Discord. Tout est 100% autonome.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Comment ouvrir le Centre de Contrôle (GUI) pour gérer les patches et mes préférences ?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        Vous pouvez ouvrir le Centre de Contrôle graphique à tout moment de 3 façons simples :<br>
+                        1. En tapant <strong>VencordEX</strong> dans votre menu Démarrer ou barre de recherche Windows.<br>
+                        2. En maintenant la touche <strong>Ctrl</strong> enfoncée en double-cliquant sur <code>VencordEX.exe</code>.<br>
+                        3. En cliquant sur le bouton <strong>⚙</strong> situé en haut à droite de l'écran de chargement.<br><br>
+                        <strong>Fonctionnalités disponibles :</strong><br>
+                        • Patcher ou restaurer les raccourcis Windows (Menu Démarrer et Bureau).<br>
+                        • Installer ou désinstaller <strong>OpenAsar</strong> en 1 clic.<br>
+                        • Restaurer Discord à 100% officiel (retirer tous les patches).<br>
+                        • <strong>Sauvegarder</strong> vos préférences et thèmes dans un fichier ZIP horodaté.<br>
+                        • <strong>Restaurer</strong> vos préférences et thèmes depuis une sauvegarde antérieure.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>L'exécutable fonctionne-t-il si je déplace le fichier ?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        Oui ! Il est 100% autonome et intègre tout le nécessaire pour fonctionner sous Windows 10 et 11.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>VencordEX • Standalone Launcher • Spylt Milk Preloader Motion • 2026</p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">
+        <span>✓</span> Copié dans le presse-papier !
+    </div>
+
+    <script>
+        // Simulation dynamique du préchargeur SPYLT Milk
+        function runSpyltSimulation() {
+            const counter = document.getElementById('simCounter');
+            const fill = document.getElementById('simFill');
+            const statusLabel = document.getElementById('simStatusLabel');
+            const statusText = document.getElementById('simStatusText');
+            const badgeLabel = document.getElementById('simBadgeLabel');
+            const footer = document.getElementById('simFooter');
+
+            counter.style.color = '#ffffff';
+            let currentPercent = 0;
+
+            const stages = [
+                { until: 25, label: "SYNCHRONISATION", text: "Détection de la mise à jour de Discord...", badge: "ANALYSE", delay: 15 },
+                { until: 50, label: "TÉLÉCHARGEMENT", text: "Récupération du patcher officiel...", badge: "DOWNLOAD", delay: 20 },
+                { until: 85, label: "INJECTION", text: "Application du patch Vencord en arrière-plan...", badge: "PATCHING", delay: 25 },
+                { until: 100, label: "SUCCÈS", text: "Vencord injecté ! Lancement de Discord...", badge: "TERMINÉ", delay: 18 }
+            ];
+
+            let stageIndex = 0;
+
+            function step() {
+                if (currentPercent <= 100) {
+                    const formatted = currentPercent < 10 ? '0' + currentPercent + '%' : currentPercent + '%';
+                    counter.innerText = formatted;
+                    fill.style.width = currentPercent + '%';
+
+                    const currentStage = stages[stageIndex];
+                    if (currentStage) {
+                        statusLabel.innerText = currentStage.label;
+                        statusText.innerText = currentStage.text;
+                        badgeLabel.innerText = currentStage.badge;
+
+                        if (currentPercent >= currentStage.until && stageIndex < stages.length - 1) {
+                            stageIndex++;
+                        }
+                    }
+
+                    if (currentPercent === 100) {
+                        counter.style.color = '#57F287';
+                        footer.innerText = "DISCORD LANCÉ AVEC SUCCÈS !";
+                    }
+
+                    currentPercent++;
+                    const speed = stages[stageIndex] ? stages[stageIndex].delay : 20;
+                    setTimeout(step, speed);
+                }
+            }
+
+            step();
+        }
+
+        // Lancement automatique de la simulation au chargement
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(runSpyltSimulation, 600);
+        });
+
+        // Copier code
+        function copyCode(elementId, btn) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const prev = btn.innerHTML;
+                btn.innerHTML = '<span>✓ Copié</span>';
+                btn.classList.add('copied');
+                showToast();
+                setTimeout(() => {
+                    btn.innerHTML = prev;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function copyLocation() {
+            navigator.clipboard.writeText("f:\\DBXSSD\\Dropbox\\FOUTOIR\\vibecoding\\vencordEX\\Vencord\\VencordEX.exe");
+            showToast();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+
+            document.querySelectorAll('.faq-item').forEach(el => {
+                el.classList.remove('active');
+                el.querySelector('.faq-answer').style.maxHeight = null;
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,8 +1,8 @@
 {
-    "name": "vencord",
+    "name": "vencordex",
     "private": "true",
     "version": "1.15.3",
-    "description": "The cutest Discord client mod",
+    "description": "VencordEX - The cutest Discord client mod",
     "homepage": "https://github.com/Vendicated/Vencord#readme",
     "bugs": {
         "url": "https://github.com/Vendicated/Vencord/issues"

@@ -1,0 +1,27 @@
+========================================================================
+   VENCORDEX • SUITE COMPLÈTE & INSTALLEUR PROGRAM FILES
+========================================================================
+
+Ce dossier contient tout pour installer et utiliser VencordEX :
+
+1. VencordEX-Setup.exe (~2 Mo) [NOUVEAU - RECOMMANDÉ] :
+   L'installeur officiel Windows avec élévation Administrateur.
+   - Installe VencordEX proprement dans : "C:\Program Files\VencordEX".
+   - Configure automatiquement tous vos raccourcis Discord (Auto-Patch).
+   - Crée le raccourci "VencordEX" dans votre menu Démarrer.
+   - Enregistre l'application dans "Applications et fonctionnalités"
+     de Windows pour pouvoir la désinstaller proprement à tout moment.
+
+2. VencordEX.exe (~1 Mo) :
+   L'exécutable principal (portable).
+   - Lance Discord instantanément si déjà patché (< 20 ms).
+   - Affiche le préchargeur animé en cas de mise à jour pour réinjecter Vencord.
+
+3. VencordEXSettings.exe (~1 Mo) :
+   L'application dédiée aux paramètres et au Centre de Contrôle.
+   - Ouvrez-le pour gérer vos sauvegardes (.zip), installer OpenAsar,
+     ou restaurer l'état officiel de Discord.
+
+========================================================================
+Guide interactif complet : Double-cliquez sur "Mode-Operatoire.html"
+========================================================================
