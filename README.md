@@ -11,7 +11,8 @@
 
 <p align="center">
   <a href="https://t12lve.github.io/VencordEX/">🌐 Guide interactif (GitHub Pages)</a> •
-  <a href="#-politique-de-lapplication--éthique">📜 Politique & Éthique</a> •
+  <a href="CHANGELOG.md">📜 Changelog</a> •
+  <a href="#-politique-de-lapplication--éthique">🛡️ Politique & Éthique</a> •
   <a href="#-crédits-et-hommage-à-vencord">💖 Crédits à Vencord</a> •
   <a href="#-fonctionnalités">✨ Fonctionnalités</a> •
   <a href="#-téléchargements--installation">📦 Installation</a>
@@ -57,7 +58,8 @@ Sous Windows, chaque mise à jour automatique de Discord (gérée par *Squirrel 
 
 ## ✨ Fonctionnalités de VencordEX
 
-- ⚡ **Auto-Patch Silencieux** : Détecte au lancement si Discord a été mis à jour et réinjecte Vencord avant que Discord n'apparaisse.
+- ⚡ **Auto-Patch Silencieux & Résilience Discord** : Détecte au lancement si Discord a été mis à jour et réinjecte Vencord avant que Discord n'apparaisse. Sécurise le démarrage contre les crashs internes du runtime Discord (`EnvironmentNotInitialized`).
+- 🔄 **Mise à jour Automatique GitHub** : Le Centre de Contrôle interroge directement les releases de [t12lve/VencordEX](https://github.com/t12lve/VencordEX) et permet la mise à jour à chaud de VencordEX en 1 clic sans re-téléchargement manuel.
 - 🎨 **Préchargeur Fluide (Motion Preloader)** : Un écran de chargement moderne et soigné avec compteur `00%` ➔ `100%`, dégradé dynamique et signature :  
   `t12lve le vibecodeur de l'extreme`.
 - 🛡️ **Dialogue Intelligent (Discord déjà ouvert)** :  
@@ -65,6 +67,7 @@ Sous Windows, chaque mise à jour automatique de Discord (gérée par *Squirrel 
   - **⚡ Oui, redémarrer** : Ferme proprement la session, patche et relance Discord.
   - **⏱ Au prochain lancement** : Patche en tâche de fond et conserve votre appel / session active sans interruption.
 - 🎛️ **Centre de Contrôle Dédié (`VencordEXSettings.exe`)** :
+  - **🔄 Mise à Jour en 1 clic** : Indicateur de version en direct (`v1.1.0`), vérification instantanée et auto-swap sécurisé.
   - **🔗 Gestion des Raccourcis** : Patcher ou restaurer les raccourcis Windows (Menu Démarrer, dossier `Discord Inc`, Barre des tâches, Bureau).
   - **⚡ Intégration d'OpenAsar** : Installer ou retirer OpenAsar en 1 clic pour optimiser les performances de Discord.
   - **🛡️ Restauration Discord** : Dépatcher Discord à 100% pour revenir à la version officielle originale.

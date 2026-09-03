@@ -240,23 +240,42 @@
                             <Image Source="app.ico" Width="18" Height="18" Margin="0,0,8,0"/>
                             <TextBlock Text="VENCORDEX" FontWeight="Black" FontSize="13" Foreground="#8da0f9"/>
                             <TextBlock Text=" • CENTRE DE CONTRÔLE" FontWeight="Bold" FontSize="13" Foreground="#4c536b" Margin="4,0,0,0"/>
+                            <Border Background="#1c2234" CornerRadius="4" Padding="6,2" Margin="8,0,0,0">
+                                <TextBlock Text="v1.1.0" FontSize="10.5" FontWeight="Bold" Foreground="#8da0f9"/>
+                            </Border>
                         </StackPanel>
 
-                        <Button Click="BtnCloseManager_Click" Grid.Column="1" Width="26" Height="26" Background="#141824" BorderBrush="#22283a" BorderThickness="1" Cursor="Hand">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
-                                        <TextBlock Text="✕" FontSize="11" Foreground="#9ca3af" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button x:Name="BtnUpdateAction" Click="BtnUpdateAction_Click" Height="26" Background="#161a26" BorderBrush="#22283a" BorderThickness="1" Padding="8,0" Margin="0,0,8,0" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="BtnBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock x:Name="TxtUpdateIcon" Text="🔄" FontSize="10" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                <TextBlock x:Name="TxtUpdateStatus" Text="Vérifier MàJ" FontSize="10.5" FontWeight="SemiBold" Foreground="#d1d5db" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <Button Click="BtnCloseManager_Click" Width="26" Height="26" Background="#141824" BorderBrush="#22283a" BorderThickness="1" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                                            <TextBlock Text="✕" FontSize="11" Foreground="#9ca3af" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
                     </Grid>
 
-                    <!-- 2. Métriques de Statut en Direct (Bento 4 blocs) -->
+                    <!-- 2. Métriques de Statut en Direct (Bento 5 blocs) -->
                     <Border Grid.Row="1" Background="#111420" CornerRadius="10" Padding="12,8" BorderBrush="#1c2234" BorderThickness="1" Margin="0,0,0,12">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -281,6 +300,11 @@
                             <StackPanel Grid.Column="3">
                                 <TextBlock Text="RACCOURCI" FontSize="9" FontWeight="Bold" Foreground="#5e6682"/>
                                 <TextBlock x:Name="LblShortcutStatus" Text="✓ PROTÉGÉ" FontSize="11.5" FontWeight="Bold" Foreground="#10B981" Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="VERSION EX" FontSize="9" FontWeight="Bold" Foreground="#5e6682"/>
+                                <TextBlock x:Name="LblVencordEXVersion" Text="v1.1.0" FontSize="11.5" FontWeight="Bold" Foreground="#8da0f9" Margin="0,2,0,0"/>
                             </StackPanel>
                         </Grid>
                     </Border>

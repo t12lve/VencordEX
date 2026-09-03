@@ -12,8 +12,8 @@
     <AssemblyProduct>VencordEX</AssemblyProduct>
     <AssemblyDescription>Discord avec VencordEX Auto-Patch</AssemblyDescription>
     <AssemblyCompany>VencordEX</AssemblyCompany>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>false</SelfContained>
   </PropertyGroup>

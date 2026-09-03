@@ -19,6 +19,17 @@ $latestApp = Get-ChildItem -Path $discordDir -Directory -Filter "app-*" -ErrorAc
              Select-Object -First 1
 
 if ($latestApp) {
+    # Eviter le crash Discord "EnvironmentNotInitialized" sur les nouvelles versions
+    $verName = $latestApp.Name -replace '^app-', ''
+    $appDataVer = Join-Path $env:APPDATA "discord\$verName"
+    if (-not (Test-Path $appDataVer)) {
+        New-Item -ItemType Directory -Path $appDataVer -Force -ErrorAction SilentlyContinue | Out-Null
+    }
+    $firstRun = Join-Path $appDataVer ".first-run"
+    if (-not (Test-Path $firstRun)) {
+        Set-Content -Path $firstRun -Value "true" -Force -ErrorAction SilentlyContinue
+    }
+
     $resourcesDir = Join-Path $latestApp.FullName "resources"
     $patchedIndicator = Join-Path $resourcesDir "_app.asar"
     $appAsar = Join-Path $resourcesDir "app.asar"

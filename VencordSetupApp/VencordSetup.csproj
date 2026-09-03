@@ -12,8 +12,8 @@
     <AssemblyProduct>VencordEX Setup</AssemblyProduct>
     <AssemblyDescription>Programme d'installation de VencordEX pour Windows</AssemblyDescription>
     <AssemblyCompany>VencordEX</AssemblyCompany>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>false</SelfContained>

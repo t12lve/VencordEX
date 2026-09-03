@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Microsoft.Win32;
@@ -14,6 +16,9 @@ namespace VencordLauncher
 {
     public partial class MainWindow : Window
     {
+        public static readonly Version CurrentVersion = new Version(1, 1, 0);
+        public const string GitHubRepo = "t12lve/VencordEX";
+
         private bool _isTestMode = false;
         private bool _forcePatch = false;
         private bool _isManagerMode = false;
@@ -23,6 +28,9 @@ namespace VencordLauncher
         private string _vencordDir = string.Empty;
         private string _cliPath = string.Empty;
         private string? _latestAppDir = null;
+
+        private GitHubReleaseInfo? _latestAvailableUpdate = null;
+        private bool _isCheckingUpdate = false;
 
         public MainWindow()
         {
@@ -166,6 +174,29 @@ namespace VencordLauncher
                             return Version.TryParse(name, out var v) ? v : new Version(0, 0, 0);
                         })
                         .FirstOrDefault();
+
+                    if (_latestAppDir != null)
+                    {
+                        EnsureDiscordFirstRunMarker(_latestAppDir);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        private void EnsureDiscordFirstRunMarker(string? appDir)
+        {
+            if (string.IsNullOrEmpty(appDir)) return;
+            try
+            {
+                string verName = Path.GetFileName(appDir).Replace("app-", "");
+                string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string targetDir = Path.Combine(appData, "discord", verName);
+                Directory.CreateDirectory(targetDir);
+                string markerPath = Path.Combine(targetDir, ".first-run");
+                if (!File.Exists(markerPath))
+                {
+                    File.WriteAllText(markerPath, "true");
                 }
             }
             catch { }
@@ -181,10 +212,11 @@ namespace VencordLauncher
             ConfirmGrid.Visibility = Visibility.Collapsed;
             ManagerGrid.Visibility = Visibility.Visible;
 
-            this.Width = 660;
+            this.Width = 680;
             this.Height = 440;
 
             RefreshStatusUI();
+            _ = CheckForUpdatesUiAsync(userInitiated: false);
         }
 
         private void RefreshStatusUI()
@@ -285,6 +317,261 @@ namespace VencordLauncher
                 LblShortcutStatus.Text = "ORIGINAL";
                 LblShortcutStatus.Foreground = new System.Windows.Media.SolidColorBrush(
                     (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#949ba4"));
+            }
+
+            // 5. Version VencordEX
+            LblVencordEXVersion.Text = $"v{CurrentVersion.ToString(3)}";
+            LblVencordEXVersion.Foreground = new System.Windows.Media.SolidColorBrush(
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#8da0f9"));
+        }
+
+        private async void BtnUpdateAction_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isCheckingUpdate) return;
+
+            if (_latestAvailableUpdate != null && _latestAvailableUpdate.IsNewer)
+            {
+                var confirm = MessageBox.Show(
+                    $"Voulez-vous télécharger et installer la mise à jour {_latestAvailableUpdate.TagName} de VencordEX ?\n\nL'application va se fermer, remplacer le binaire et se relancer automatiquement.",
+                    "Mise à jour de VencordEX",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    await ApplyUpdateAsync(_latestAvailableUpdate);
+                }
+            }
+            else
+            {
+                await CheckForUpdatesUiAsync(userInitiated: true);
+            }
+        }
+
+        private async Task CheckForUpdatesUiAsync(bool userInitiated)
+        {
+            if (_isCheckingUpdate) return;
+            _isCheckingUpdate = true;
+
+            try
+            {
+                var txtStatus = (TextBlock?)BtnUpdateAction.Template?.FindName("TxtUpdateStatus", BtnUpdateAction);
+                var txtIcon = (TextBlock?)BtnUpdateAction.Template?.FindName("TxtUpdateIcon", BtnUpdateAction);
+                var btnBorder = (Border?)BtnUpdateAction.Template?.FindName("BtnBorder", BtnUpdateAction);
+
+                if (txtStatus != null) txtStatus.Text = "Recherche...";
+
+                if (userInitiated)
+                {
+                    LblManagerLog.Text = "Vérification des mises à jour sur GitHub (t12lve/VencordEX)...";
+                }
+
+                var update = await Task.Run(CheckForGitHubUpdateAsync);
+
+                if (update != null && update.IsNewer)
+                {
+                    _latestAvailableUpdate = update;
+
+                    if (txtStatus != null)
+                    {
+                        txtStatus.Text = $"MàJ {update.TagName}";
+                        txtStatus.Foreground = System.Windows.Media.Brushes.White;
+                    }
+                    if (txtIcon != null) txtIcon.Text = "⚡";
+
+                    if (btnBorder != null)
+                    {
+                        btnBorder.Background = new System.Windows.Media.SolidColorBrush(
+                            (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#10B981"));
+                        btnBorder.BorderBrush = new System.Windows.Media.SolidColorBrush(
+                            (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#059669"));
+                    }
+
+                    LblVencordEXVersion.Text = $"{update.TagName} dispo !";
+                    LblVencordEXVersion.Foreground = new System.Windows.Media.SolidColorBrush(
+                        (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#F59E0B"));
+
+                    LblManagerLog.Text = $"🚀 Mise à jour {update.TagName} disponible ! Cliquez sur 'MàJ {update.TagName}' pour l'installer.";
+                }
+                else
+                {
+                    _latestAvailableUpdate = null;
+
+                    if (txtStatus != null)
+                    {
+                        txtStatus.Text = "À jour ✓";
+                        txtStatus.Foreground = new System.Windows.Media.SolidColorBrush(
+                            (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#10B981"));
+                    }
+                    if (txtIcon != null) txtIcon.Text = "✓";
+
+                    LblVencordEXVersion.Text = $"v{CurrentVersion.ToString(3)}";
+                    LblVencordEXVersion.Foreground = new System.Windows.Media.SolidColorBrush(
+                        (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#10B981"));
+
+                    if (userInitiated)
+                    {
+                        LblManagerLog.Text = $"✓ VencordEX est à jour (v{CurrentVersion.ToString(3)}). Aucune mise à jour disponible.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (userInitiated)
+                {
+                    LblManagerLog.Text = "Erreur vérification mise à jour : " + ex.Message;
+                }
+            }
+            finally
+            {
+                _isCheckingUpdate = false;
+            }
+        }
+
+        private async Task<GitHubReleaseInfo?> CheckForGitHubUpdateAsync()
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("VencordEX-AutoUpdater");
+                client.Timeout = TimeSpan.FromSeconds(6);
+
+                string url = $"https://api.github.com/repos/{GitHubRepo}/releases/latest";
+                string json = await client.GetStringAsync(url);
+
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                string tagName = root.TryGetProperty("tag_name", out var tagElem) ? (tagElem.GetString() ?? "") : "";
+                string htmlUrl = root.TryGetProperty("html_url", out var htmlElem) ? (htmlElem.GetString() ?? "") : "";
+
+                string cleanTag = tagName.TrimStart('v', 'V');
+                Version? remoteVer = null;
+                if (Version.TryParse(cleanTag, out var v))
+                {
+                    remoteVer = v;
+                }
+                else if (System.Text.RegularExpressions.Regex.Match(cleanTag, @"^(\d+\.\d+(\.\d+)?)") is { Success: true } m)
+                {
+                    string norm = m.Value;
+                    if (norm.Count(c => c == '.') == 1) norm += ".0";
+                    Version.TryParse(norm, out remoteVer);
+                }
+
+                string exeUrl = "";
+                if (root.TryGetProperty("assets", out var assets) && assets.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var asset in assets.EnumerateArray())
+                    {
+                        string name = asset.TryGetProperty("name", out var n) ? (n.GetString() ?? "") : "";
+                        if (name.Equals("VencordEX.exe", StringComparison.OrdinalIgnoreCase))
+                        {
+                            exeUrl = asset.TryGetProperty("browser_download_url", out var b) ? (b.GetString() ?? "") : "";
+                            break;
+                        }
+                    }
+                }
+
+                bool isNewer = remoteVer != null && remoteVer > CurrentVersion;
+
+                return new GitHubReleaseInfo
+                {
+                    TagName = tagName,
+                    HtmlUrl = htmlUrl,
+                    ExeDownloadUrl = exeUrl,
+                    ParsedVersion = remoteVer,
+                    IsNewer = isNewer
+                };
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private async Task ApplyUpdateAsync(GitHubReleaseInfo update)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(update.ExeDownloadUrl))
+                {
+                    Process.Start(new ProcessStartInfo { FileName = update.HtmlUrl, UseShellExecute = true });
+                    LblManagerLog.Text = "Redirection vers GitHub pour le téléchargement manuel...";
+                    return;
+                }
+
+                LblManagerLog.Text = $"Téléchargement de {update.TagName} en cours...";
+                string tempExe = Path.Combine(Path.GetTempPath(), $"VencordEX_Update_{Guid.NewGuid():N}.exe");
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("VencordEX-AutoUpdater");
+                    var data = await client.GetByteArrayAsync(update.ExeDownloadUrl);
+                    if (data.Length < 100000)
+                    {
+                        throw new Exception("Binaire téléchargé corrompu ou incomplet.");
+                    }
+                    await File.WriteAllBytesAsync(tempExe, data);
+                }
+
+                LblManagerLog.Text = "Installation de la mise à jour et relance en cours...";
+
+                string currentExe = Process.GetCurrentProcess().MainModule?.FileName ??
+                                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VencordEX.exe");
+                string appDir = Path.GetDirectoryName(currentExe) ?? AppDomain.CurrentDomain.BaseDirectory;
+                string targetVencordEX = Path.Combine(appDir, "VencordEX.exe");
+                string targetSettings = Path.Combine(appDir, "VencordEXSettings.exe");
+
+                string batchFile = Path.Combine(Path.GetTempPath(), $"vencordex_updater_{Guid.NewGuid():N}.cmd");
+                int pid = Process.GetCurrentProcess().Id;
+
+                string batchContent = $@"@echo off
+timeout /t 1 /nobreak > NUL
+:waitproc
+tasklist /fi ""PID eq {pid}"" 2>NUL | find ""{pid}"" > NUL
+if not errorlevel 1 (
+    timeout /t 1 /nobreak > NUL
+    goto waitproc
+)
+copy /y ""{tempExe}"" ""{targetVencordEX}"" > NUL
+if exist ""{targetSettings}"" (
+    copy /y ""{tempExe}"" ""{targetSettings}"" > NUL
+)
+del ""{tempExe}"" > NUL 2>&1
+start """" ""{targetVencordEX}"" --manager
+(goto) 2>nul & del ""%~f0""
+";
+
+                await File.WriteAllTextAsync(batchFile, batchContent);
+
+                bool needsElevation = false;
+                try
+                {
+                    string testFile = Path.Combine(appDir, ".write_test");
+                    File.WriteAllText(testFile, "1");
+                    File.Delete(testFile);
+                }
+                catch
+                {
+                    needsElevation = true;
+                }
+
+                var psi = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = $"/c \"{batchFile}\"",
+                    CreateNoWindow = true,
+                    UseShellExecute = true,
+                    Verb = needsElevation ? "runas" : ""
+                };
+
+                Process.Start(psi);
+                Application.Current.Shutdown();
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                LblManagerLog.Text = "Erreur installation mise à jour : " + ex.Message;
             }
         }
 
@@ -861,6 +1148,34 @@ namespace VencordLauncher
 
         private void LaunchDiscord()
         {
+            EnsureDiscordFirstRunMarker(_latestAppDir);
+
+            // 1. Privilégier Update.exe --processStart Discord.exe (initialisation propre Squirrel & runtime)
+            try
+            {
+                string updateExe = Path.Combine(_discordDir, "Update.exe");
+                if (File.Exists(updateExe))
+                {
+                    string args = "--processStart Discord.exe";
+                    if (_passedArgs.Length > 0)
+                    {
+                        args += " --process-start-args \"" + string.Join(" ", _passedArgs) + "\"";
+                    }
+
+                    var psi = new ProcessStartInfo
+                    {
+                        FileName = updateExe,
+                        Arguments = args,
+                        WorkingDirectory = _discordDir,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                    return;
+                }
+            }
+            catch { }
+
+            // 2. Fallback binaire direct si Update.exe n'est pas trouvé
             try
             {
                 if (!string.IsNullOrEmpty(_latestAppDir))
@@ -881,29 +1196,6 @@ namespace VencordLauncher
                 }
             }
             catch { }
-
-            try
-            {
-                string updateExe = Path.Combine(_discordDir, "Update.exe");
-                if (File.Exists(updateExe))
-                {
-                    string args = "--processStart Discord.exe";
-                    if (_passedArgs.Length > 0)
-                    {
-                        args += " --process-start-args \"" + string.Join(" ", _passedArgs) + "\"";
-                    }
-
-                    var psi = new ProcessStartInfo
-                    {
-                        FileName = updateExe,
-                        Arguments = args,
-                        WorkingDirectory = _discordDir,
-                        UseShellExecute = true
-                    };
-                    Process.Start(psi);
-                }
-            }
-            catch { }
         }
 
         private async Task ExitAppAsync()
@@ -921,5 +1213,14 @@ namespace VencordLauncher
             try { Application.Current.Shutdown(); } catch { }
             Environment.Exit(0);
         }
+    }
+
+    public class GitHubReleaseInfo
+    {
+        public string TagName { get; set; } = string.Empty;
+        public string HtmlUrl { get; set; } = string.Empty;
+        public string ExeDownloadUrl { get; set; } = string.Empty;
+        public Version? ParsedVersion { get; set; }
+        public bool IsNewer { get; set; }
     }
 }

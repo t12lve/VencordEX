@@ -188,7 +188,7 @@ namespace VencordSetup
                             if (key != null)
                             {
                                 key.SetValue("DisplayName", "VencordEX");
-                                key.SetValue("DisplayVersion", "1.0.0");
+                                key.SetValue("DisplayVersion", "1.1.0");
                                 key.SetValue("Publisher", "t12lve le vibecodeur de l'extreme");
                                 key.SetValue("DisplayIcon", targetVencordEX + ",0");
                                 key.SetValue("InstallLocation", targetDir);
