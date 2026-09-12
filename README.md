@@ -67,7 +67,7 @@ Sous Windows, chaque mise à jour automatique de Discord (gérée par *Squirrel 
   - **⚡ Oui, redémarrer** : Ferme proprement la session, patche et relance Discord.
   - **⏱ Au prochain lancement** : Patche en tâche de fond et conserve votre appel / session active sans interruption.
 - 🎛️ **Centre de Contrôle Dédié (`VencordEXSettings.exe`)** :
-  - **🔄 Mise à Jour en 1 clic** : Indicateur de version en direct (`v1.1.0`), vérification instantanée et auto-swap sécurisé.
+  - **🔄 Mise à Jour en 1 clic** : Indicateur de version en direct (`v1.1.1`), vérification instantanée et auto-swap sécurisé.
   - **🔗 Gestion des Raccourcis** : Patcher ou restaurer les raccourcis Windows (Menu Démarrer, dossier `Discord Inc`, Barre des tâches, Bureau).
   - **⚡ Intégration d'OpenAsar** : Installer ou retirer OpenAsar en 1 clic pour optimiser les performances de Discord.
   - **🛡️ Restauration Discord** : Dépatcher Discord à 100% pour revenir à la version officielle originale.

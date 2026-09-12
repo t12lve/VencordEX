@@ -17,7 +17,7 @@
 */
 
 import { app } from "electron";
-import { copyFileSync, existsSync, readdirSync, renameSync } from "original-fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, renameSync, writeFileSync } from "original-fs";
 import { basename, dirname, join } from "path";
 
 function isNewer($new: string, old: string) {
@@ -60,6 +60,20 @@ function patchLatest() {
 
         renameSync(newAppAsar, newAppAsarBackup);
         copyFileSync(oldVencordAsar, newAppAsar);
+
+        // Prevent Discord Rust updater panic (EnvironmentNotInitialized) on next startup
+        try {
+            const verName = latestVersion.replace(/^app-/, "");
+            const appData = app.getPath("appData");
+            const targetDir = join(appData, "discord", verName);
+            if (!existsSync(targetDir)) {
+                mkdirSync(targetDir, { recursive: true });
+            }
+            const marker = join(targetDir, ".first-run");
+            if (!existsSync(marker)) {
+                writeFileSync(marker, "true");
+            }
+        } catch {}
     } catch (err) {
         console.error("[Vencord] Failed to repatch latest host update", err);
     }

@@ -16,7 +16,7 @@ namespace VencordLauncher
 {
     public partial class MainWindow : Window
     {
-        public static readonly Version CurrentVersion = new Version(1, 1, 0);
+        public static readonly Version CurrentVersion = new Version(1, 1, 1);
         public const string GitHubRepo = "t12lve/VencordEX";
 
         private bool _isTestMode = false;
@@ -115,6 +115,14 @@ namespace VencordLauncher
                 {
                     needsPatch = true;
                 }
+                else if (File.Exists(appAsar) && new FileInfo(appAsar).Length == 0)
+                {
+                    needsPatch = true;
+                }
+                else if (File.Exists(appAsar) && new FileInfo(appAsar).Length < 1024 && !File.Exists(patchedIndicator))
+                {
+                    needsPatch = true;
+                }
             }
 
             if (_forcePatch)
@@ -174,29 +182,80 @@ namespace VencordLauncher
                             return Version.TryParse(name, out var v) ? v : new Version(0, 0, 0);
                         })
                         .FirstOrDefault();
-
-                    if (_latestAppDir != null)
-                    {
-                        EnsureDiscordFirstRunMarker(_latestAppDir);
-                    }
                 }
+
+                // Toujours garantir le marqueur .first-run sur toutes les versions existantes
+                EnsureDiscordFirstRunMarker(_latestAppDir);
             }
             catch { }
         }
 
         private void EnsureDiscordFirstRunMarker(string? appDir)
         {
-            if (string.IsNullOrEmpty(appDir)) return;
             try
             {
-                string verName = Path.GetFileName(appDir).Replace("app-", "");
                 string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                string targetDir = Path.Combine(appData, "discord", verName);
-                Directory.CreateDirectory(targetDir);
-                string markerPath = Path.Combine(targetDir, ".first-run");
-                if (!File.Exists(markerPath))
+                string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+                var channels = new[] { "Discord", "DiscordCanary", "DiscordPTB", "DiscordDevelopment" };
+                foreach (var channel in channels)
                 {
-                    File.WriteAllText(markerPath, "true");
+                    string chanLocalDir = Path.Combine(localAppData, channel);
+                    string chanDataDir = Path.Combine(appData, channel.ToLowerInvariant());
+
+                    if (Directory.Exists(chanLocalDir))
+                    {
+                        var dirs = Directory.GetDirectories(chanLocalDir, "app-*");
+                        foreach (var d in dirs)
+                        {
+                            string v = Path.GetFileName(d).Replace("app-", "");
+                            if (string.IsNullOrEmpty(v)) continue;
+                            string target = Path.Combine(chanDataDir, v);
+                            try
+                            {
+                                Directory.CreateDirectory(target);
+                                string marker = Path.Combine(target, ".first-run");
+                                if (!File.Exists(marker))
+                                {
+                                    File.WriteAllText(marker, "true");
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+
+                    if (Directory.Exists(chanDataDir))
+                    {
+                        foreach (var d in Directory.GetDirectories(chanDataDir))
+                        {
+                            string v = Path.GetFileName(d);
+                            if (Version.TryParse(v, out _))
+                            {
+                                try
+                                {
+                                    string marker = Path.Combine(d, ".first-run");
+                                    if (!File.Exists(marker))
+                                    {
+                                        File.WriteAllText(marker, "true");
+                                    }
+                                }
+                                catch { }
+                            }
+                        }
+                    }
+                }
+
+                // Si un appDir spécifique est passé, s'assurer aussi explicitement de son marquage
+                if (!string.IsNullOrEmpty(appDir))
+                {
+                    string verName = Path.GetFileName(appDir).Replace("app-", "");
+                    string targetDir = Path.Combine(appData, "discord", verName);
+                    Directory.CreateDirectory(targetDir);
+                    string markerPath = Path.Combine(targetDir, ".first-run");
+                    if (!File.Exists(markerPath))
+                    {
+                        File.WriteAllText(markerPath, "true");
+                    }
                 }
             }
             catch { }

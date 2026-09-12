@@ -7,6 +7,18 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
 ---
 
+## [1.1.1] - 2026-09-11
+
+### 🛡️ Corrigé & Blindage de Résilience
+- **Résolution Définitive des Blocages de Mise à Jour Discord (Panic Rust `EnvironmentNotInitialized`)** :
+  - **Protection Runtime dans Electron (`patcher.ts` / `patcher.js`)** : Détection et création systématique du marqueur `.first-run` dans `%APPDATA%\discord\<version>` dès le chargement du patch Vencord, avant l'initialisation du bundle Discord. Supprime tout risque de crash quel que soit le point d'entrée (raccourci, démarrage Windows, redémarrage automatique Squirrel ou lanceur tiers).
+  - **Garantie Pré-Redémarrage (`persistAfterDiscordUpdates.ts`)** : Génération immédiate de `.first-run` dès la détection d'une nouvelle version hôte `app-1.0.xxxx` lors de l'événement `before-quit`.
+  - **Détection Exhaustive Multi-Canaux (`MainWindow.xaml.cs`)** : Balayage et sécurisation de toutes les versions de Discord (`Discord`, `DiscordCanary`, `DiscordPTB`, `DiscordDevelopment`) dans `EnsureDiscordFirstRunMarker()`.
+  - **Auto-Réparation des Patchs Altérés** : Détection intelligente des fichiers `app.asar` corrompus, incomplets ou à 0 octet et réinjection silencieuse automatique.
+  - **Mise à Jour des Binaires Déployés** : Remplacement des exécutables dans `C:\Program Files\VencordEX\` et `%APPDATA%\Vencord\` vers la v1.1.1.
+
+---
+
 ## [1.1.0] - 2026-09-03
 
 ### ✨ Ajouté

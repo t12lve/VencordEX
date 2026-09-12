@@ -13,13 +13,34 @@ $discordDir = "$env:LOCALAPPDATA\Discord"
 $vencordAppData = "$env:APPDATA\Vencord"
 $cliPath = Join-Path $vencordAppData "VencordInstallerCli.exe"
 
-# 1. Detection de la derniere version installee de Discord
+# 1. Detection et sécurisation des versions installées de Discord
+$channels = @("Discord", "DiscordCanary", "DiscordPTB", "DiscordDevelopment")
+foreach ($chan in $channels) {
+    $chanLocal = Join-Path $env:LOCALAPPDATA $chan
+    $chanData = Join-Path $env:APPDATA ($chan.ToLowerInvariant())
+    if (Test-Path $chanLocal) {
+        $apps = Get-ChildItem -Path $chanLocal -Directory -Filter "app-*" -ErrorAction SilentlyContinue
+        foreach ($app in $apps) {
+            $v = $app.Name -replace '^app-', ''
+            if ($v) {
+                $tgt = Join-Path $chanData $v
+                if (-not (Test-Path $tgt)) {
+                    New-Item -ItemType Directory -Path $tgt -Force -ErrorAction SilentlyContinue | Out-Null
+                }
+                $marker = Join-Path $tgt ".first-run"
+                if (-not (Test-Path $marker)) {
+                    Set-Content -Path $marker -Value "true" -Force -ErrorAction SilentlyContinue
+                }
+            }
+        }
+    }
+}
+
 $latestApp = Get-ChildItem -Path $discordDir -Directory -Filter "app-*" -ErrorAction SilentlyContinue |
              Sort-Object { try { [version]($_.Name -replace '^app-', '') } catch { 0 } } -Descending |
              Select-Object -First 1
 
 if ($latestApp) {
-    # Eviter le crash Discord "EnvironmentNotInitialized" sur les nouvelles versions
     $verName = $latestApp.Name -replace '^app-', ''
     $appDataVer = Join-Path $env:APPDATA "discord\$verName"
     if (-not (Test-Path $appDataVer)) {

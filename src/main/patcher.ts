@@ -18,12 +18,46 @@
 
 import { onceDefined } from "@shared/onceDefined";
 import electron, { app, BrowserWindowConstructorOptions, Menu } from "electron";
-import { dirname, join } from "path";
+import { basename, dirname, join } from "path";
 
 import { RendererSettings } from "./settings";
 import { IS_VANILLA } from "./utils/constants";
 
 console.log("[Vencord] Starting up...");
+
+// Prevent Discord Rust updater panic (EnvironmentNotInitialized)
+// Ensures .first-run exists in %APPDATA%\discord\<version> so performFirstRunTasks is skipped
+if (process.platform === "win32") {
+    try {
+        const { existsSync, mkdirSync, writeFileSync, readdirSync } = require("original-fs");
+        const appData = app.getPath("appData");
+        const discordUserData = join(appData, "discord");
+        const appFolder = dirname(process.execPath);
+        const currentVersion = basename(appFolder).replace(/^app-/, "");
+
+        const ensureMarker = (ver: string) => {
+            if (!ver) return;
+            const targetDir = join(discordUserData, ver);
+            if (!existsSync(targetDir)) {
+                mkdirSync(targetDir, { recursive: true });
+            }
+            const marker = join(targetDir, ".first-run");
+            if (!existsSync(marker)) {
+                writeFileSync(marker, "true");
+            }
+        };
+
+        ensureMarker(currentVersion);
+
+        if (existsSync(discordUserData)) {
+            for (const entry of readdirSync(discordUserData)) {
+                if (/^[0-9]+\.[0-9]+\.[0-9]+/.test(entry)) {
+                    ensureMarker(entry);
+                }
+            }
+        }
+    } catch {}
+}
 
 // Our injector file at app/index.js
 const injectorPath = require.main!.filename;
